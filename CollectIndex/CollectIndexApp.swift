@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct CollectIndexApp: App {
+    @StateObject var collections = Collections()
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(collections)
         }
     }
 }
