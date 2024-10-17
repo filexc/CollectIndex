@@ -31,7 +31,7 @@ struct NewCollectionView: View {
             
             
             HStack{
-                Text("Collection Name")
+                Text("  Collection Name")
                 TextField("Collection Name", text:$cName)
                     .textFieldStyle(.roundedBorder)
             }
@@ -40,8 +40,7 @@ struct NewCollectionView: View {
             VStack{
                 HStack{
                     Spacer()
-                    Text("Collection Cover")
-                    Spacer()
+                    Text("Collection Cover                         ")
                     PhotosPicker("Select an image", selection: $selectedItem, matching:.images)
                         .onChange(of: selectedItem){
                             Task{
@@ -51,7 +50,6 @@ struct NewCollectionView: View {
                                 print("Failed to load the image")
                             }
                         }
-                    Spacer()
                 }
                 if let cImage{
                     Image(uiImage: cImage)
@@ -69,7 +67,7 @@ struct NewCollectionView: View {
                 .font(.system(size:24))
             
             HStack{
-                Text("Item Name")
+                Text("Item Name   ")
                 TextField("Item Name", text:$iName)
                     .textFieldStyle(.roundedBorder)
             }

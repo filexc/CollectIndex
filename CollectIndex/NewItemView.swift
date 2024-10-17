@@ -6,13 +6,80 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct NewItemView: View {
+    @State private var selectedItem: PhotosPickerItem?
+    @State private var iName: String = ""
+    @State private var iImage: UIImage? = nil
+    @State var collection: Collection
+    @EnvironmentObject var collections: Collections
+    
+    @Environment(\.dismiss) var dismiss
+    
+    var photoPicker = PhotoPicker()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            Spacer()
+            
+            Text("New Item")
+                .bold()
+                .font(.system(size:30))
+            
+            HStack{
+                Text("Item Name")
+                TextField("Item Name", text:$iName)
+                    .textFieldStyle(.roundedBorder)
+            }
+            .padding()
+            
+            VStack{
+                HStack{
+                    Text("Item Image") //TODO: change to be the names that the user created for item fields
+                    Spacer()
+                    PhotosPicker("Select an image", selection: $selectedItem, matching:.images)
+                        .onChange(of: selectedItem){
+                            Task{
+                                if let data = try? await selectedItem?.loadTransferable(type: Data.self){
+                                    iImage = UIImage(data: data)
+                                }
+                                print("Failed to load the image")
+                            }
+                        }
+                }
+                if let iImage{
+                    Image(uiImage: iImage)
+                        .resizable()
+                        .scaledToFit()
+                }
+            }
+            .padding()
+            
+            Spacer()
+            Spacer()
+            Spacer()
+            Spacer()
+            
+            Button("Create Item"){
+                createItem()
+                dismiss()
+            }
+            .buttonStyle(.bordered)
+            .disabled(iName == "" || iImage == nil)
+        }
+    }
+    
+    func createItem(){
+        if let index = collections.collectionArray.firstIndex(where: {$0.id == collection.id}){
+            collections.collectionArray[index].items.append(Item(id:UUID(), name: iName, image: iImage))
+            print("")
+        }
+//        collection.add(item: Item(id:UUID(), name: iName, image: iImage))
+//        print(collection.items)
     }
 }
 
 #Preview {
-    NewItemView()
+    NewItemView(collection:Collection.example)
 }

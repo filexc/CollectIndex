@@ -16,5 +16,9 @@ struct Collection : Identifiable, Hashable {
     let itemName: String
     let photoName: String
     
+    mutating func add(item: Item){
+        items.append(item)
+    }
+    
     static let example = Collection(id: UUID(), name: "a", items: [Item](), coverImage: UIImage(systemName: "square.fill"), itemName: "a", photoName: "a")
 }
