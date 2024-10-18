@@ -36,10 +36,11 @@ struct CollectionView: View {
             }
             Spacer()
                 .navigationTitle("Collection: " + collection.name)
+                .navigationDestination(for: Item.self){item in
+                    ItemView(item: item)
+                }
         }
-        .navigationDestination(for: Item.self){item in
-            ItemView(item: item)
-        }
+        
         
     }
 }
