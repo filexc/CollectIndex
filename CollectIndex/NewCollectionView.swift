@@ -94,7 +94,7 @@ struct NewCollectionView: View {
         
     }
     func createCollection(){
-        collections.collectionArray.append(Collection(id: UUID(), name: cName, items: [Item](), coverImage: cImage, itemName: iName, photoName: pName))
+        collections.collectionArray.append(Collection(id: UUID(), name: cName, items: [Item](), coverImage: CodableImage(photo: cImage!), itemName: iName, photoName: pName))
     }
 }
 

@@ -15,8 +15,19 @@ struct ContentView: View {
             ScrollView{
                 ForEach(collections.collectionArray) {collection in
                     VStack{
-                        NavigationLink(value: collection){
-                            CollectionRow(collection: collection)
+                        NavigationLink {
+                              CollectionView(collection: collection)
+                         } label: {
+                             HStack{
+                                 Image(uiImage: UIImage(data: collection.coverImage.photo)!)
+                                     .resizable()
+                                     .frame(width: 60, height: 60)
+                                     .clipped()
+                                 Text(collection.name)
+                                     .font(.system(size: 24))
+                                 Spacer()
+                             }
+                             .padding()
                         }
                     }
                     .frame(width: 320, height: 80, alignment: .topLeading)

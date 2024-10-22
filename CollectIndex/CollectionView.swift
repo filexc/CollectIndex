@@ -17,8 +17,19 @@ struct CollectionView: View {
             //this may be bad -- force unwrapping
             ForEach(collections.collectionArray[collections.collectionArray.firstIndex(where: {$0.id == collection.id})!].items) {item in
                 VStack{
-                    NavigationLink(value: item){
-                        ItemRow(item: item)
+                    NavigationLink {
+                          ItemView(item: item)
+                     } label: {
+                         HStack{
+                             Image(uiImage: UIImage(data: item.image.photo)!)
+                                 .resizable()
+                                 .frame(width: 60, height: 60)
+                                 .clipped()
+                             Text(item.name)
+                                 .font(.system(size: 24))
+                             Spacer()
+                         }
+                         .padding()
                     }
                 }
                 .frame(width: 320, height: 80, alignment: .topLeading)

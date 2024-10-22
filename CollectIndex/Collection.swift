@@ -8,11 +8,11 @@
 import Foundation
 import PhotosUI
 
-struct Collection : Identifiable, Hashable {
+struct Collection : Identifiable, Hashable, Codable {
     let id: UUID
     let name: String
     var items: [Item]
-    let coverImage: UIImage?
+    let coverImage: CodableImage
     let itemName: String
     let photoName: String
     
@@ -20,5 +20,5 @@ struct Collection : Identifiable, Hashable {
         items.append(item)
     }
     
-    static let example = Collection(id: UUID(), name: "a", items: [Item](), coverImage: UIImage(systemName: "square.fill"), itemName: "a", photoName: "a")
+    static let example = Collection(id: UUID(), name: "a", items: [Item](), coverImage: CodableImage(photo: UIImage(systemName: "square.fill")!), itemName: "a", photoName: "a")
 }

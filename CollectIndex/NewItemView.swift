@@ -72,7 +72,7 @@ struct NewItemView: View {
     
     func createItem(){
         if let index = collections.collectionArray.firstIndex(where: {$0.id == collection.id}){
-            collections.collectionArray[index].items.append(Item(id:UUID(), name: iName, image: iImage))
+            collections.collectionArray[index].items.append(Item(id:UUID(), name: iName, image: CodableImage(photo: iImage!)))
             print("")
         }
 //        collection.add(item: Item(id:UUID(), name: iName, image: iImage))
