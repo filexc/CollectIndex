@@ -11,6 +11,8 @@ struct CollectionView: View {
     @EnvironmentObject var collections: Collections
     @State var collection: Collection
     @State private var showingDetail = false
+    @State private var showingDeleteAlert = false
+    @State private var itemToDelete: Item?
     
     var body: some View {
         NavigationStack{
@@ -18,23 +20,46 @@ struct CollectionView: View {
             ForEach(collections.collectionArray[collections.collectionArray.firstIndex(where: {$0.id == collection.id})!].items) {item in
                 VStack{
                     NavigationLink {
-                          ItemView(item: item)
-                     } label: {
-                         HStack{
-                             Image(uiImage: UIImage(data: item.image.photo)!)
-                                 .resizable()
-                                 .frame(width: 60, height: 60)
-                                 .clipped()
-                             Text(item.name)
-                                 .font(.system(size: 24))
-                             Spacer()
-                         }
-                         .padding()
+                        ItemView(item: item)
+                    } label: {
+                        HStack{
+                            Image(uiImage: UIImage(data: item.image.photo)!)
+                                .resizable()
+                                .frame(width: 60, height: 60)
+                                .clipped()
+                            Text(item.name)
+                                .font(.system(size: 24))
+                            Spacer()
+                            Button {
+                                itemToDelete = item
+                                showingDeleteAlert = true
+                            } label: {
+                                Image(systemName: "trash")
+                                    .foregroundStyle(.red)
+                            }
+                            .alert(isPresented:$showingDeleteAlert) {
+                                Alert(
+                                    title: Text("Confirm Delete"),
+                                    message: Text("You cannot undo this action"),
+                                    primaryButton: .destructive(Text("Delete")) {
+                                        if let item = itemToDelete {
+                                            deleteItem(item: item)
+                                        }
+                                        itemToDelete = nil
+                                    },
+                                    secondaryButton: .cancel() {
+                                        itemToDelete = nil
+                                    }
+                                )
+                            }
+                        }
+                        .padding()
                     }
                 }
                 .frame(width: 320, height: 80, alignment: .topLeading)
                 .foregroundColor(.black)
             }
+            
             Button{
                 showingDetail = true
             } label: {
@@ -51,12 +76,12 @@ struct CollectionView: View {
                     ItemView(item: item)
                 }
         }
-        
-        
+    }
+    func deleteItem(item: Item){
+        collections.collectionArray[collections.collectionArray.firstIndex(where: {$0.id == collection.id})!].items.remove(at: collections.collectionArray[collections.collectionArray.firstIndex(where: {$0.id == collection.id})!].items.firstIndex(where: {$0.id == item.id})!)
     }
 }
-
-//#Preview {
-//    CollectionView(collection: Collection.example)
-//        .environmentObject(Collections())
-//}
+//    #Preview {
+//        CollectionView(collection: Collection.example)
+//            .environmentObject(Collections())
+//    }

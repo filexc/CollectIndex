@@ -26,17 +26,16 @@ struct NewItemView: View {
             Text("New Item")
                 .bold()
                 .font(.system(size:30))
-            
             HStack{
-                Text("Item Name")
-                TextField("Item Name", text:$iName)
+                Text(collection.itemName)
+                TextField(collection.itemName, text:$iName)
                     .textFieldStyle(.roundedBorder)
             }
             .padding()
             
             VStack{
                 HStack{
-                    Text("Item Image") //TODO: change to be the names that the user created for item fields
+                    Text(collection.photoName)
                     Spacer()
                     PhotosPicker("Select an image", selection: $selectedItem, matching:.images)
                         .onChange(of: selectedItem){
