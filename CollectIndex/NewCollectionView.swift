@@ -16,85 +16,112 @@ struct NewCollectionView: View {
     @State private var iName: String = ""
     @State private var pName: String = ""
     @State private var cImage: UIImage? = nil
+    @State private var oDescriptors: [String] = [String]()
+    //TODO: (if time) be able to delete added item fields
     
     var photoPicker = PhotoPicker()
     
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        VStack{
-            Spacer()
-            
-            Text("New Collection")
-                .bold()
-                .font(.system(size:30))
-            
-            
-            HStack{
-                Text("  Collection Name")
-                TextField("Collection Name", text:$cName)
-                    .textFieldStyle(.roundedBorder)
-            }
-            .padding()
-            
+        ScrollView{
             VStack{
+                Spacer()
+                
+                Text("New Collection")
+                    .bold()
+                    .font(.system(size:30))
+                
+                
                 HStack{
-                    Spacer()
-                    Text("Collection Cover                         ")
-                    PhotosPicker("Select an image", selection: $selectedItem, matching:.images)
-                        .onChange(of: selectedItem){
-                            Task{
-                                if let data = try? await selectedItem?.loadTransferable(type: Data.self){
-                                    cImage = UIImage(data: data)
+                    Text("  Collection Name")
+                    TextField("Collection Name", text:$cName)
+                        .textFieldStyle(.roundedBorder)
+                }
+                .padding()
+                
+                VStack{
+                    HStack{
+                        Spacer()
+                        Text("Collection Cover                         ")
+                        PhotosPicker("Select an image", selection: $selectedItem, matching:.images)
+                            .onChange(of: selectedItem){
+                                Task{
+                                    if let data = try? await selectedItem?.loadTransferable(type: Data.self){
+                                        cImage = UIImage(data: data)
+                                    }
+                                    print("Failed to load the image")
                                 }
-                                print("Failed to load the image")
                             }
-                        }
+                    }
+                    if let cImage{
+                        Image(uiImage: cImage)
+                            .resizable()
+                            .scaledToFit()
+                    }
                 }
-                if let cImage{
-                    Image(uiImage: cImage)
-                        .resizable()
-                        .scaledToFit()
+                .padding()
+                
+                Spacer()
+                Spacer()
+                Spacer()
+                Spacer()
+                Spacer()
+                Spacer()
+                Spacer()
+                Spacer()
+                
+                Text("Item Fields")
+                    .bold()
+                    .underline()
+                    .font(.system(size:24))
+                
+                HStack{
+                    Text("Item Name   ")
+                    TextField("Item Name", text:$iName)
+                        .textFieldStyle(.roundedBorder)
                 }
+                .padding()
+                
+                HStack{
+                    Text("Photo Name")
+                    TextField("Photo Name", text:$pName)
+                        .textFieldStyle(.roundedBorder)
+                }
+                .padding()
+                
+                ForEach($oDescriptors, id:\.self) {descriptor in
+                    TextField("New Item Field", text: descriptor)
+                        .textFieldStyle(.roundedBorder)
+                        .padding()
+                }
+                Button("Add Item Field"){
+                    addItemField()
+                }
+                
+                Spacer()
+                Spacer()
+                Spacer()
+                Spacer()
+                Spacer()
+                Spacer()
+                Spacer()
+                Spacer()
+                
+                Button("Create Collection"){
+                    createCollection()
+                    dismiss()
+                }
+                .buttonStyle(.bordered)
+                .disabled(cName == "" || iName == "" || pName == "" || cImage == nil)
             }
-            .padding()
-            
-            Spacer()
-            
-            Text("Item Fields")
-                .bold()
-                .underline()
-                .font(.system(size:24))
-            
-            HStack{
-                Text("Item Name   ")
-                TextField("Item Name", text:$iName)
-                    .textFieldStyle(.roundedBorder)
-            }
-            .padding()
-            
-            HStack{
-                Text("Photo Name")
-                TextField("Photo Name", text:$pName)
-                    .textFieldStyle(.roundedBorder)
-            }
-            .padding()
-            
-            Spacer()
-            Spacer()
-            Spacer()
-            
-            Button("Create Collection"){
-                createCollection()
-                dismiss()
-            }
-            .buttonStyle(.bordered)
-            .disabled(cName == "" || iName == "" || pName == "" || cImage == nil)
         }
-        
     }
     func createCollection(){
-        collections.collectionArray.append(Collection(id: UUID(), name: cName, items: [Item](), coverImage: CodableImage(photo: cImage!), itemName: iName, photoName: pName))
+        collections.collectionArray.append(Collection(id: UUID(), name: cName, items: [Item](), coverImage: CodableImage(photo: cImage!), itemName: iName, photoName: pName, otherDescriptors: oDescriptors))
+    }
+    func addItemField(){
+        oDescriptors.append("")
     }
 }
 

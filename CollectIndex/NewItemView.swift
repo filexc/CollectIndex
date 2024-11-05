@@ -13,7 +13,11 @@ struct NewItemView: View {
     @State private var iName: String = ""
     @State private var iImage: UIImage? = nil
     @State var collection: Collection
+//    @State var oDescriptions: [String] = [String]()
+    
+    @State private var otherFields: [Other] = [Other]()
     @EnvironmentObject var collections: Collections
+    //TODO: iterate through Other descriptor array and make an otherFields array through this
     
     @Environment(\.dismiss) var dismiss
     
@@ -55,6 +59,18 @@ struct NewItemView: View {
             }
             .padding()
             
+            ForEach(collection.otherDescriptors.indices, id: \.self){index in
+                NewFieldRow(collection: collection, index: index, description: "")
+//                HStack{
+//                    Text(collection.otherDescriptors[index])
+//                    Spacer()
+//                    // TODO: figure out how to bind a text field to a new array :)
+////                    TextField(text:)
+////                        .textFieldStyle(.roundedBorder)
+//                }
+//                .padding()
+            }
+            
             Spacer()
             Spacer()
             Spacer()
@@ -70,13 +86,17 @@ struct NewItemView: View {
     }
     
     func createItem(){
+//        ForEach(collection.otherDescriptors.indices, id: \.self){index in
+//            otherFields.append(Other(id:UUID(), description: String, descriptor: collection.otherDescriptors[index]))
+//        }
         if let index = collections.collectionArray.firstIndex(where: {$0.id == collection.id}){
-            collections.collectionArray[index].items.append(Item(id:UUID(), name: iName, image: CodableImage(photo: iImage!)))
+            collections.collectionArray[index].items.append(Item(id:UUID(), name: iName, image: CodableImage(photo: iImage!), otherFields: [Other]()))
             print("")
         }
 //        collection.add(item: Item(id:UUID(), name: iName, image: iImage))
 //        print(collection.items)
     }
+    
 }
 
 #Preview {
