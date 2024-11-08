@@ -15,12 +15,12 @@ struct Collection : Identifiable, Hashable, Codable {
     let coverImage: CodableImage
     let itemName: String
     let photoName: String
-    let otherDescriptors: [String]
-    //TODO: add Other descriptors array
+    let otherKeys: [Key]
+    let numKeys: Int
     
     mutating func add(item: Item){
         items.append(item)
     }
     
-    static let example = Collection(id: UUID(), name: "collection", items: [Item](), coverImage: CodableImage(photo: UIImage(systemName: "square.fill")!), itemName: "item name", photoName: "photo name", otherDescriptors: ["descriptor 1"])
+    static let example = Collection(id: UUID(), name: "collection", items: [Item](), coverImage: CodableImage(photo: UIImage(systemName: "square.fill")!), itemName: "item name", photoName: "photo name", otherKeys: [Key("descriptor 1")], numKeys:1)
 }

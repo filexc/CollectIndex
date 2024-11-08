@@ -12,29 +12,31 @@ struct ItemView: View {
     @State var item: Item
     //may need to make it a scroll view
     var body: some View {
-        Spacer()
-        Text(item.name)
-            .font(.system(size: 24))
+        ScrollView{
+            Spacer()
+            Text(item.name)
+                .font(.system(size: 24))
             Image(uiImage: UIImage(data: item.image.photo)!)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 200, height: 200)
-        Spacer()
-        ForEach(item.otherFields) {other in
-            HStack{
-                Text(other.description + ":")
-                    .bold()
-                Text(other.descriptor)
+            Spacer()
+            ForEach(item.otherFields) {other in
+                HStack{
+                    Text(other.key + ":")
+                        .bold()
+                    Text(other.value)
+                }
+                .padding()
             }
-            .padding()
+            Spacer()
+            Spacer()
+            Spacer()
+            Spacer()
+            Spacer()
+            Spacer()
+                .navigationTitle("Item: " + item.name)
         }
-        Spacer()
-        Spacer()
-        Spacer()
-        Spacer()
-        Spacer()
-        Spacer()
-            .navigationTitle("Item: " + item.name)
     }
 }
 

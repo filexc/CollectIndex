@@ -15,5 +15,5 @@ struct Item : Identifiable, Hashable, Codable{
     let image: CodableImage
     let otherFields: [Other]
     
-    static let example = Item(id: UUID(), name: "item 1", image: CodableImage(photo: UIImage(systemName: "square.fill")!), otherFields:[Other(id: UUID(), description: "description", descriptor: "descriptor")])
+    static let example = Item(id: UUID(), name: "item 1", image: CodableImage(photo: UIImage(systemName: "square.fill")!), otherFields:[Other(id: UUID(), key: "key", value: "value")])
 }

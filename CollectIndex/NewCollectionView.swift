@@ -16,7 +16,8 @@ struct NewCollectionView: View {
     @State private var iName: String = ""
     @State private var pName: String = ""
     @State private var cImage: UIImage? = nil
-    @State private var oDescriptors: [String] = [String]()
+    @State private var oKeys: [Key] = [Key]()
+    @State private var shouldHide: Bool = false
     //TODO: (if time) be able to delete added item fields
     
     var photoPicker = PhotoPicker()
@@ -90,13 +91,19 @@ struct NewCollectionView: View {
                 }
                 .padding()
                 
-                ForEach($oDescriptors, id:\.self) {descriptor in
-                    TextField("New Item Field", text: descriptor)
+                ForEach($oKeys, id:\.self.id) {descriptor in
+                    TextField("New Item Field", text: descriptor.value)
                         .textFieldStyle(.roundedBorder)
                         .padding()
                 }
-                Button("Add Item Field"){
-                    addItemField()
+                
+                if !shouldHide{
+                    Button("Add Item Field"){
+                        addItemField()
+                        if (oKeys.count == 5){
+                            shouldHide = true
+                        }
+                    }
                 }
                 
                 Spacer()
@@ -114,14 +121,15 @@ struct NewCollectionView: View {
                 }
                 .buttonStyle(.bordered)
                 .disabled(cName == "" || iName == "" || pName == "" || cImage == nil)
+                //TODO: make disabled for the added fields too...
             }
         }
     }
     func createCollection(){
-        collections.collectionArray.append(Collection(id: UUID(), name: cName, items: [Item](), coverImage: CodableImage(photo: cImage!), itemName: iName, photoName: pName, otherDescriptors: oDescriptors))
+        collections.collectionArray.append(Collection(id: UUID(), name: cName, items: [Item](), coverImage: CodableImage(photo: cImage!), itemName: iName, photoName: pName, otherKeys: oKeys, numKeys: oKeys.count))
     }
     func addItemField(){
-        oDescriptors.append("")
+        oKeys.append(Key(""))
     }
 }
 

@@ -13,13 +13,15 @@ struct NewItemView: View {
     @State private var iName: String = ""
     @State private var iImage: UIImage? = nil
     @State var collection: Collection
-//    @State var oDescriptions: [String] = [String]()
-    
     @State private var otherFields: [Other] = [Other]()
     @EnvironmentObject var collections: Collections
-    //TODO: iterate through Other descriptor array and make an otherFields array through this
-    
     @Environment(\.dismiss) var dismiss
+    
+    @State private var otherValue1: String = ""
+    @State private var otherValue2: String = ""
+    @State private var otherValue3: String = ""
+    @State private var otherValue4: String = ""
+    @State private var otherValue5: String = ""
     
     var photoPicker = PhotoPicker()
     
@@ -59,16 +61,22 @@ struct NewItemView: View {
             }
             .padding()
             
-            ForEach(collection.otherDescriptors.indices, id: \.self){index in
-                NewFieldRow(collection: collection, index: index, description: "")
-//                HStack{
-//                    Text(collection.otherDescriptors[index])
-//                    Spacer()
-//                    // TODO: figure out how to bind a text field to a new array :)
-////                    TextField(text:)
-////                        .textFieldStyle(.roundedBorder)
-//                }
-//                .padding()
+            ForEach(collection.otherKeys.indices, id: \.self){index in
+                HStack{
+                    Text(collection.otherKeys[index].value)
+                    if (index == 0){
+                        TextField(collection.otherKeys[index].value, text: $otherValue1)
+                    } else if (index == 1){
+                        TextField(collection.otherKeys[index].value, text: $otherValue2)
+                    } else if (index == 2){
+                        TextField(collection.otherKeys[index].value, text: $otherValue3)
+                    } else if (index == 3){
+                        TextField(collection.otherKeys[index].value, text: $otherValue4)
+                    } else if (index == 4){
+                        TextField(collection.otherKeys[index].value, text: $otherValue5)
+                    }
+                }
+                .padding()
             }
             
             Spacer()
@@ -86,15 +94,27 @@ struct NewItemView: View {
     }
     
     func createItem(){
-//        ForEach(collection.otherDescriptors.indices, id: \.self){index in
-//            otherFields.append(Other(id:UUID(), description: String, descriptor: collection.otherDescriptors[index]))
-//        }
+        for index in collection.otherKeys.indices {
+            if(index == 0 && otherValue1 != ""){
+                self.otherFields.append(Other(id:UUID(), key:collection.otherKeys[index].value, value:otherValue1))
+            }
+            if(index == 1 && otherValue1 != ""){
+                self.otherFields.append(Other(id:UUID(), key:collection.otherKeys[index].value, value:otherValue2))
+            }
+            if(index == 2 && otherValue1 != ""){
+                self.otherFields.append(Other(id:UUID(), key:collection.otherKeys[index].value, value:otherValue3))
+            }
+            if(index == 3 && otherValue1 != ""){
+                self.otherFields.append(Other(id:UUID(), key:collection.otherKeys[index].value, value:otherValue4))
+            }
+            if(index == 4 && otherValue1 != ""){
+                self.otherFields.append(Other(id:UUID(), key:collection.otherKeys[index].value, value:otherValue5))
+            }
+        }
         if let index = collections.collectionArray.firstIndex(where: {$0.id == collection.id}){
-            collections.collectionArray[index].items.append(Item(id:UUID(), name: iName, image: CodableImage(photo: iImage!), otherFields: [Other]()))
+            collections.collectionArray[index].items.append(Item(id:UUID(), name: iName, image: CodableImage(photo: iImage!), otherFields: otherFields))
             print("")
         }
-//        collection.add(item: Item(id:UUID(), name: iName, image: iImage))
-//        print(collection.items)
     }
     
 }

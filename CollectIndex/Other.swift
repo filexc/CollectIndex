@@ -8,6 +8,6 @@
 import Foundation
 struct Other : Hashable, Codable, Identifiable {
     let id: UUID
-    let description: String
-    let descriptor: String
+    let key: String
+    let value: String
 }

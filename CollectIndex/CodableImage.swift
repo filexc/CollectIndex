@@ -18,4 +18,4 @@ public struct CodableImage: Codable, Hashable {
     }
 }
 
-//UIImage(data: instanceOfSomeImage.photo)!
+//use this to call: UIImage(data: instanceOfSomeImage.photo)!
