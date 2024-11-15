@@ -177,11 +177,13 @@ struct NewCollectionView: View {
                         createCollection()
                         dismiss()
                     }
-//                    .padding(8)
-//                    .background(Color(settings.textColor).opacity(0.5))
-//                    .buttonStyle(.bordered)
-//                    .cornerRadius(10)
-                    .disabled(cName == "" || iName == "" || pName == "" || cImage == nil && ((oKeys.count == 0) || (oKeys.count == 1 && oKeys[0].value == "") || (oKeys.count == 2 && oKeys[0].value == "" || oKeys[1].value == "") || (oKeys.count == 3 && oKeys[0].value == "" || oKeys[1].value == "" || oKeys[2].value == "") || (oKeys.count == 4 && oKeys[0].value == "" || oKeys[1].value == "" || oKeys[2].value == "" || oKeys[3].value == "") || (oKeys.count == 5 && oKeys[0].value == "" || oKeys[1].value == "" || oKeys[2].value == "" || oKeys[3].value == "" || oKeys[4].value == "")))
+                    .padding(8)
+                    .background(Color(settings.textColor).opacity(0.5))
+                    .buttonStyle(.bordered)
+                    .cornerRadius(10)
+                    .disabled(cName == "" || iName == "" || pName == "" || cImage == nil)
+                //TODO: this broke entirely fix it later
+                // && ((oKeys.count == 0) || (oKeys.count == 1 && oKeys[0].value == "") || (oKeys.count == 2 && oKeys[0].value == "" || oKeys[1].value == "") || (oKeys.count == 3 && oKeys[0].value == "" || oKeys[1].value == "" || oKeys[2].value == "") || (oKeys.count == 4 && oKeys[0].value == "" || oKeys[1].value == "" || oKeys[2].value == "" || oKeys[3].value == "") || (oKeys.count == 5 && oKeys[0].value == "" || oKeys[1].value == "" || oKeys[2].value == "" || oKeys[3].value == "" || oKeys[4].value == "")))
             }
             
         }
