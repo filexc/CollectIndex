@@ -12,10 +12,12 @@ import Foundation
 struct CollectIndexApp: App {
     @Environment(\.scenePhase) private var scenePhase
     @StateObject var collections = Collections()
+    @StateObject var settings = SettingsManager()
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(collections)
+                .environmentObject(settings)
                 .task {
                     do {
                         try await collections.loadSavedData()

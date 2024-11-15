@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CollectionView: View {
     @EnvironmentObject var collections: Collections
+    @EnvironmentObject var settings: SettingsManager
     @State var collection: Collection
     @State private var showingDetail = false
     @State private var showingDeleteAlert = false
@@ -26,9 +27,10 @@ struct CollectionView: View {
                             Image(uiImage: UIImage(data: item.image.photo)!)
                                 .resizable()
                                 .frame(width: 60, height: 60)
-                                .clipped()
+                                .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
                             Text(item.name)
                                 .font(.system(size: 24))
+                                .foregroundStyle(Color(settings.textColor))
                             Spacer()
                             Button {
                                 itemToDelete = item
@@ -57,7 +59,7 @@ struct CollectionView: View {
                     }
                 }
                 .frame(width: 320, height: 80, alignment: .topLeading)
-                .foregroundColor(.black)
+                .foregroundColor(Color(settings.textColor))
             }
             
             Button{
@@ -66,6 +68,7 @@ struct CollectionView: View {
                 Image(systemName: "plus.square")
                     .font(.system(size: 60))
                     .frame(width: 300, height: 60, alignment: .topLeading)
+                    .foregroundStyle(Color(settings.textColor))
             }
             .sheet(isPresented: $showingDetail){
                 NewItemView(collection: collection)
@@ -76,6 +79,8 @@ struct CollectionView: View {
                     ItemView(item: item)
                 }
         }
+        .containerRelativeFrame([.horizontal, .vertical])
+        .background(Color(settings.backgroundColor))
     }
     func deleteItem(item: Item){
         collections.collectionArray[collections.collectionArray.firstIndex(where: {$0.id == collection.id})!].items.remove(at: collections.collectionArray[collections.collectionArray.firstIndex(where: {$0.id == collection.id})!].items.firstIndex(where: {$0.id == item.id})!)
@@ -84,4 +89,5 @@ struct CollectionView: View {
 //    #Preview {
 //        CollectionView(collection: Collection.example)
 //            .environmentObject(Collections())
+//            .environmentObject(SettingsManager())
 //    }

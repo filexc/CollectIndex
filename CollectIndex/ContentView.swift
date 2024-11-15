@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var collections: Collections
+    @EnvironmentObject var settings: SettingsManager
     @State private var showingDetail = false
     @State private var collectionToDelete: Collection?
     @State private var showingDeleteAlert = false
@@ -25,9 +26,10 @@ struct ContentView: View {
                                 Image(uiImage: UIImage(data: collection.coverImage.photo)!)
                                     .resizable()
                                     .frame(width: 60, height: 60)
-                                    .clipped()
+                                    .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
                                 Text(collection.name)
                                     .font(.system(size: 24))
+                                    .foregroundStyle(Color(settings.textColor))
                                 Spacer()
                                 Button {
                                     collectionToDelete = collection
@@ -56,7 +58,8 @@ struct ContentView: View {
                         }
                     }
                     .frame(width: 320, height: 80, alignment: .topLeading)
-                    .foregroundColor(.black)
+                    .foregroundColor(Color(settings.textColor))
+                    .background(Color(settings.backgroundColor))
                 }
                 Button{
                     showingDetail = true
@@ -64,6 +67,7 @@ struct ContentView: View {
                     Image(systemName: "plus.square")
                         .font(.system(size: 60))
                         .frame(width: 300, height: 60, alignment: .topLeading)
+                        .foregroundStyle(Color(settings.textColor))
                 }
                 .sheet(isPresented: $showingDetail){
                     NewCollectionView()
@@ -74,8 +78,36 @@ struct ContentView: View {
             .navigationDestination(for: Collection.self){ collection in
                 CollectionView(collection: collection)
             }
+            .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .principal) {
+                            HStack{
+                                Spacer()
+                                Spacer()
+                                Spacer()
+                                Spacer()
+                                Spacer()
+                                Text("CollectIndex: Collections")
+                                    .font(.headline)
+                                    .foregroundStyle(Color(settings.textColor))
+                                Spacer()
+                                Spacer()
+                                NavigationLink {
+                                    SettingsView(backgroundColor: settings.$backgroundColor, textColor:settings.$textColor)
+                                } label: {
+                                    Image(systemName: "gear")
+                                        .foregroundStyle(Color(settings.textColor))
+                                }
+                            }
+                        }
+                    }
+                    .containerRelativeFrame([.horizontal, .vertical])
+                    .background(Color(settings.backgroundColor))
+                    
         }
+        
     }
+        
     
     func deleteCollection(collection: Collection){
         collections.collectionArray.remove(at: collections.collectionArray.firstIndex(where: {$0.id == collection.id})!)
@@ -86,4 +118,5 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .environmentObject(Collections())
+        .environmentObject(SettingsManager())
 }

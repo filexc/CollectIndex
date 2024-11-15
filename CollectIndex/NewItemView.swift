@@ -89,7 +89,8 @@ struct NewItemView: View {
                 dismiss()
             }
             .buttonStyle(.bordered)
-            .disabled(iName == "" || iImage == nil)
+            .disabled(iName == "" || iImage == nil && (( collection.otherKeys.count == 0) ||
+                      (collection.otherKeys.count == 1 && otherValue1 == "") || (collection.otherKeys.count == 2 && otherValue1 == "" || otherValue2 == "") || (collection.otherKeys.count == 3 && otherValue1 == "" || otherValue2 == "" || otherValue3 == "") || (collection.otherKeys.count == 4 && otherValue1 == "" || otherValue2 == "" || otherValue3 == "" || otherValue4 == "") || (collection.otherKeys.count == 5 && otherValue1 == "" || otherValue2 == "" || otherValue3 == "" || otherValue4 == "" || otherValue5 == "")))
         }
     }
     
