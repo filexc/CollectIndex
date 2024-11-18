@@ -82,6 +82,7 @@ struct CollectionView: View {
         .containerRelativeFrame([.horizontal, .vertical])
         .background(Color(settings.backgroundColor))
     }
+    
     func deleteItem(item: Item){
         collections.collectionArray[collections.collectionArray.firstIndex(where: {$0.id == collection.id})!].items.remove(at: collections.collectionArray[collections.collectionArray.firstIndex(where: {$0.id == collection.id})!].items.firstIndex(where: {$0.id == item.id})!)
     }

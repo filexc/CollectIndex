@@ -15,6 +15,7 @@ struct NewItemView: View {
     @State var collection: Collection
     @State private var otherFields: [Other] = [Other]()
     @EnvironmentObject var collections: Collections
+    @EnvironmentObject var settings: SettingsManager
     @Environment(\.dismiss) var dismiss
     
     @State private var otherValue1: String = ""
@@ -28,20 +29,28 @@ struct NewItemView: View {
     var body: some View {
         VStack{
             Spacer()
-            
             Text("New Item")
                 .bold()
                 .font(.system(size:30))
+                .foregroundStyle(Color(settings.textColor))
             HStack{
                 Text(collection.itemName)
-                TextField(collection.itemName, text:$iName)
-                    .textFieldStyle(.roundedBorder)
+                    .foregroundStyle(Color(settings.textColor))
+                TextField("", text:$iName, prompt: Text(collection.itemName).foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                    .padding(5)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10.0)
+                            .strokeBorder(Color(settings.textColor))
+                    )
+                    .padding(5)
+                    .foregroundStyle(Color(settings.textColor))
             }
             .padding()
             
             VStack{
                 HStack{
                     Text(collection.photoName)
+                        .foregroundStyle(Color(settings.textColor))
                     Spacer()
                     PhotosPicker("Select an image", selection: $selectedItem, matching:.images)
                         .onChange(of: selectedItem){
@@ -61,20 +70,77 @@ struct NewItemView: View {
             }
             .padding()
             
-            ForEach(collection.otherKeys.indices, id: \.self){index in
+            if (collection.otherKey1 != ""){
                 HStack{
-                    Text(collection.otherKeys[index].value)
-                    if (index == 0){
-                        TextField(collection.otherKeys[index].value, text: $otherValue1)
-                    } else if (index == 1){
-                        TextField(collection.otherKeys[index].value, text: $otherValue2)
-                    } else if (index == 2){
-                        TextField(collection.otherKeys[index].value, text: $otherValue3)
-                    } else if (index == 3){
-                        TextField(collection.otherKeys[index].value, text: $otherValue4)
-                    } else if (index == 4){
-                        TextField(collection.otherKeys[index].value, text: $otherValue5)
-                    }
+                    Text(collection.otherKey1)
+                        .foregroundStyle(Color(settings.textColor))
+                    TextField("", text:$otherValue1, prompt: Text(collection.otherKey1).foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                        .padding(5)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10.0)
+                                .strokeBorder(Color(settings.textColor))
+                        )
+                        .padding(5)
+                        .foregroundStyle(Color(settings.textColor))
+                }
+                .padding()
+            }
+            if (collection.otherKey2 != ""){
+                HStack{
+                    Text(collection.otherKey2)
+                        .foregroundStyle(Color(settings.textColor))
+                    TextField("", text:$otherValue2, prompt: Text(collection.otherKey2).foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                        .padding(5)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10.0)
+                                .strokeBorder(Color(settings.textColor))
+                        )
+                        .padding(5)
+                        .foregroundStyle(Color(settings.textColor))                }
+                .padding()
+            }
+            if (collection.otherKey3 != ""){
+                HStack{
+                    Text(collection.otherKey3)
+                        .foregroundStyle(Color(settings.textColor))
+                    TextField("", text:$otherValue3, prompt: Text(collection.otherKey3).foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                        .padding(5)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10.0)
+                                .strokeBorder(Color(settings.textColor))
+                        )
+                        .padding(5)
+                        .foregroundStyle(Color(settings.textColor))
+                }
+                .padding()
+            }
+            if (collection.otherKey4 != ""){
+                HStack{
+                    Text(collection.otherKey4)
+                        .foregroundStyle(Color(settings.textColor))
+                    TextField("", text:$otherValue4, prompt: Text(collection.otherKey4).foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                        .padding(5)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10.0)
+                                .strokeBorder(Color(settings.textColor))
+                        )
+                        .padding(5)
+                        .foregroundStyle(Color(settings.textColor))
+                }
+                .padding()
+            }
+            if (collection.otherKey5 != ""){
+                HStack{
+                    Text(collection.otherKey5)
+                        .foregroundStyle(Color(settings.textColor))
+                    TextField("", text:$otherValue5, prompt: Text(collection.otherKey5).foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                        .padding(5)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10.0)
+                                .strokeBorder(Color(settings.textColor))
+                        )
+                        .padding(5)
+                        .foregroundStyle(Color(settings.textColor))
                 }
                 .padding()
             }
@@ -88,33 +154,34 @@ struct NewItemView: View {
                 createItem()
                 dismiss()
             }
+            .background(Color(settings.textColor).opacity(0.3))
+            .foregroundStyle(Color(settings.textColor))
             .buttonStyle(.bordered)
-            .disabled(iName == "" || iImage == nil && (( collection.otherKeys.count == 0) ||
-                      (collection.otherKeys.count == 1 && otherValue1 == "") || (collection.otherKeys.count == 2 && otherValue1 == "" || otherValue2 == "") || (collection.otherKeys.count == 3 && otherValue1 == "" || otherValue2 == "" || otherValue3 == "") || (collection.otherKeys.count == 4 && otherValue1 == "" || otherValue2 == "" || otherValue3 == "" || otherValue4 == "") || (collection.otherKeys.count == 5 && otherValue1 == "" || otherValue2 == "" || otherValue3 == "" || otherValue4 == "" || otherValue5 == "")))
+            .cornerRadius(10)
+            .disabled(iName == "" || iImage == nil || (collection.otherKey1 != "" && otherValue1 == "") || (collection.otherKey2 != "" && otherValue2 == "") || (collection.otherKey3 != "" && otherValue3 == "") || (collection.otherKey4 != "" && otherValue4 == "") || (collection.otherKey5 != "" && otherValue5 == ""))
         }
+        .containerRelativeFrame([.horizontal, .vertical])
+        .background(Color(settings.backgroundColor))
     }
     
     func createItem(){
-        for index in collection.otherKeys.indices {
-            if(index == 0 && otherValue1 != ""){
-                self.otherFields.append(Other(id:UUID(), key:collection.otherKeys[index].value, value:otherValue1))
-            }
-            if(index == 1 && otherValue1 != ""){
-                self.otherFields.append(Other(id:UUID(), key:collection.otherKeys[index].value, value:otherValue2))
-            }
-            if(index == 2 && otherValue1 != ""){
-                self.otherFields.append(Other(id:UUID(), key:collection.otherKeys[index].value, value:otherValue3))
-            }
-            if(index == 3 && otherValue1 != ""){
-                self.otherFields.append(Other(id:UUID(), key:collection.otherKeys[index].value, value:otherValue4))
-            }
-            if(index == 4 && otherValue1 != ""){
-                self.otherFields.append(Other(id:UUID(), key:collection.otherKeys[index].value, value:otherValue5))
-            }
+        if(collection.otherKey1 != ""){
+            self.otherFields.append(Other(id:UUID(), key: collection.otherKey1, value:otherValue1))
+        }
+        if(collection.otherKey2 != ""){
+            self.otherFields.append(Other(id:UUID(), key: collection.otherKey2, value:otherValue2))
+        }
+        if(collection.otherKey3 != ""){
+            self.otherFields.append(Other(id:UUID(), key: collection.otherKey3, value:otherValue3))
+        }
+        if(collection.otherKey4 != ""){
+            self.otherFields.append(Other(id:UUID(), key: collection.otherKey4, value:otherValue4))
+        }
+        if(collection.otherKey5 != ""){
+            self.otherFields.append(Other(id:UUID(), key: collection.otherKey5, value:otherValue5))
         }
         if let index = collections.collectionArray.firstIndex(where: {$0.id == collection.id}){
             collections.collectionArray[index].items.append(Item(id:UUID(), name: iName, image: CodableImage(photo: iImage!), otherFields: otherFields))
-            print("")
         }
     }
     
@@ -122,4 +189,5 @@ struct NewItemView: View {
 
 #Preview {
     NewItemView(collection:Collection.example)
+        .environmentObject(SettingsManager())
 }

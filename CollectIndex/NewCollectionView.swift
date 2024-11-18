@@ -16,9 +16,14 @@ struct NewCollectionView: View {
     @State private var iName: String = ""
     @State private var pName: String = ""
     @State private var cImage: UIImage? = nil
-    @State private var oKeys: [Key] = [Key]()
+    @State private var oKey1: String = ""
+    @State private var oKey2: String = ""
+    @State private var oKey3: String = ""
+    @State private var oKey4: String = ""
+    @State private var oKey5: String = ""
+    @State private var count: Int = 0
     @State private var shouldHide: Bool = false
-    @State private var fieldToDelete: UUID?
+    @State private var fieldToDelete: Int?
     @State private var showingDeleteAlert = false
     @State private var enableButton = false
     
@@ -118,9 +123,9 @@ struct NewCollectionView: View {
                 }
                 .padding()
                 
-                ForEach($oKeys, id:\.self.id) {descriptor in
+                if (count >= 1){
                     HStack{
-                        TextField("", text:descriptor.value, prompt: Text("New Item Field").foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                        TextField("", text: $oKey1, prompt: Text("New Item Field").foregroundStyle(Color(settings.textColor).opacity(0.5)))
                             .padding(5)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10.0)
@@ -130,7 +135,155 @@ struct NewCollectionView: View {
                             .foregroundStyle(Color(settings.textColor))
                         Spacer()
                         Button {
-                            fieldToDelete = descriptor.id
+                            fieldToDelete = 1
+                            showingDeleteAlert = true
+                        } label: {
+                            Image(systemName: "trash")
+                                .foregroundStyle(.red)
+                        }
+                        .alert(isPresented:$showingDeleteAlert) {
+                            Alert(
+                                title: Text("Confirm Delete"),
+                                message: Text("You cannot undo this action"),
+                                primaryButton: .destructive(Text("Delete")) {
+                                    if let field = fieldToDelete {
+                                        deleteField(field: field)
+                                    }
+                                    fieldToDelete = nil
+                                },
+                                secondaryButton: .cancel() {
+                                    fieldToDelete = nil
+                                }
+                            )
+                        }
+                    }
+                    .padding(.trailing)
+                }
+                
+                if (count >= 2){
+                    HStack{
+                        TextField("", text: $oKey2, prompt: Text("New Item Field").foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                            .padding(5)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10.0)
+                                    .strokeBorder(Color(settings.textColor))
+                            )
+                            .padding(5)
+                            .foregroundStyle(Color(settings.textColor))
+                        Spacer()
+                        Button {
+                            fieldToDelete = 2
+                            showingDeleteAlert = true
+                        } label: {
+                            Image(systemName: "trash")
+                                .foregroundStyle(.red)
+                        }
+                        .alert(isPresented:$showingDeleteAlert) {
+                            Alert(
+                                title: Text("Confirm Delete"),
+                                message: Text("You cannot undo this action"),
+                                primaryButton: .destructive(Text("Delete")) {
+                                    if let field = fieldToDelete {
+                                        deleteField(field: field)
+                                    }
+                                    fieldToDelete = nil
+                                },
+                                secondaryButton: .cancel() {
+                                    fieldToDelete = nil
+                                }
+                            )
+                        }
+                    }
+                    .padding(.trailing)
+                }
+                
+                if (count >= 3){
+                    HStack{
+                        TextField("", text: $oKey3, prompt: Text("New Item Field").foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                            .padding(5)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10.0)
+                                    .strokeBorder(Color(settings.textColor))
+                            )
+                            .padding(5)
+                            .foregroundStyle(Color(settings.textColor))
+                        Spacer()
+                        Button {
+                            fieldToDelete = 3
+                            showingDeleteAlert = true
+                        } label: {
+                            Image(systemName: "trash")
+                                .foregroundStyle(.red)
+                        }
+                        .alert(isPresented:$showingDeleteAlert) {
+                            Alert(
+                                title: Text("Confirm Delete"),
+                                message: Text("You cannot undo this action"),
+                                primaryButton: .destructive(Text("Delete")) {
+                                    if let field = fieldToDelete {
+                                        deleteField(field: field)
+                                    }
+                                    fieldToDelete = nil
+                                },
+                                secondaryButton: .cancel() {
+                                    fieldToDelete = nil
+                                }
+                            )
+                        }
+                    }
+                    .padding(.trailing)
+                }
+                
+                if (count >= 4){
+                    HStack{
+                        TextField("", text: $oKey4, prompt: Text("New Item Field").foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                            .padding(5)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10.0)
+                                    .strokeBorder(Color(settings.textColor))
+                            )
+                            .padding(5)
+                            .foregroundStyle(Color(settings.textColor))
+                        Spacer()
+                        Button {
+                            fieldToDelete = 4
+                            showingDeleteAlert = true
+                        } label: {
+                            Image(systemName: "trash")
+                                .foregroundStyle(.red)
+                        }
+                        .alert(isPresented:$showingDeleteAlert) {
+                            Alert(
+                                title: Text("Confirm Delete"),
+                                message: Text("You cannot undo this action"),
+                                primaryButton: .destructive(Text("Delete")) {
+                                    if let field = fieldToDelete {
+                                        deleteField(field: field)
+                                    }
+                                    fieldToDelete = nil
+                                },
+                                secondaryButton: .cancel() {
+                                    fieldToDelete = nil
+                                }
+                            )
+                        }
+                    }
+                    .padding(.trailing)
+                }
+                
+                if (count == 5){
+                    HStack{
+                        TextField("", text: $oKey5, prompt: Text("New Item Field").foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                            .padding(5)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10.0)
+                                    .strokeBorder(Color(settings.textColor))
+                            )
+                            .padding(5)
+                            .foregroundStyle(Color(settings.textColor))
+                        Spacer()
+                        Button {
+                            fieldToDelete = 5
                             showingDeleteAlert = true
                         } label: {
                             Image(systemName: "trash")
@@ -158,7 +311,7 @@ struct NewCollectionView: View {
                 if !shouldHide{
                     Button("Add Item Field"){
                         addItemField()
-                        if (oKeys.count == 5){
+                        if (count == 5){
                             shouldHide = true
                         }
                     }
@@ -177,13 +330,11 @@ struct NewCollectionView: View {
                         createCollection()
                         dismiss()
                     }
-                    .padding(8)
-                    .background(Color(settings.textColor).opacity(0.5))
+                    .background(Color(settings.textColor).opacity(0.3))
+                    .foregroundStyle(Color(settings.textColor))
                     .buttonStyle(.bordered)
                     .cornerRadius(10)
-                    .disabled(cName == "" || iName == "" || pName == "" || cImage == nil)
-                //TODO: this broke entirely fix it later
-                // && ((oKeys.count == 0) || (oKeys.count == 1 && oKeys[0].value == "") || (oKeys.count == 2 && oKeys[0].value == "" || oKeys[1].value == "") || (oKeys.count == 3 && oKeys[0].value == "" || oKeys[1].value == "" || oKeys[2].value == "") || (oKeys.count == 4 && oKeys[0].value == "" || oKeys[1].value == "" || oKeys[2].value == "" || oKeys[3].value == "") || (oKeys.count == 5 && oKeys[0].value == "" || oKeys[1].value == "" || oKeys[2].value == "" || oKeys[3].value == "" || oKeys[4].value == "")))
+                    .disabled(cName == "" || iName == "" || pName == "" || cImage == nil || (count >= 1 && oKey1 == "") || (count >= 2 && oKey2 == "") || (count >= 3 && oKey3 == "") || (count >= 4 && oKey4 == "") || (count == 5 && oKey5 == ""))
             }
             
         }
@@ -193,14 +344,31 @@ struct NewCollectionView: View {
     }
         
     func createCollection(){
-        collections.collectionArray.append(Collection(id: UUID(), name: cName, items: [Item](), coverImage: CodableImage(photo: cImage!), itemName: iName, photoName: pName, otherKeys: oKeys, numKeys: oKeys.count))
-    }
-    func addItemField(){
-        oKeys.append(Key(""))
+        collections.collectionArray.append(Collection(id: UUID(), name: cName, items: [Item](), coverImage: CodableImage(photo: cImage!), itemName: iName, photoName: pName, otherKey1: oKey1, otherKey2: oKey2, otherKey3: oKey3, otherKey4: oKey4, otherKey5: oKey5))
     }
     
-    func deleteField(field: UUID){
-        oKeys.remove(at: oKeys.firstIndex(where: {$0.id == field})!)
+    func addItemField(){
+        count += 1
+    }
+    
+    func deleteField(field: Int){
+        if field == 1 {
+            oKey1 = oKey2
+        }
+        if field <= 2 {
+            oKey2 = oKey3
+        }
+        if field <= 3 {
+            oKey3 = oKey4
+        }
+        if field <= 4 {
+            oKey4 = oKey5
+        }
+        if field <= 5 {
+            oKey5 = ""
+        }
+        count -= 1
+        shouldHide = false
     }
     
 }

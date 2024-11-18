@@ -93,7 +93,7 @@ struct ContentView: View {
                                 Spacer()
                                 Spacer()
                                 NavigationLink {
-                                    SettingsView(backgroundColor: settings.$backgroundColor, textColor:settings.$textColor)
+                                    SettingsView(backgroundColor: settings.$backgroundColor, textColor:settings.$textColor, fontChoice: settings.$fontChoice)
                                 } label: {
                                     Image(systemName: "gear")
                                         .foregroundStyle(Color(settings.textColor))
@@ -112,6 +112,8 @@ struct ContentView: View {
     func deleteCollection(collection: Collection){
         collections.collectionArray.remove(at: collections.collectionArray.firstIndex(where: {$0.id == collection.id})!)
     }
+    
+        //TODO: fix the scroll view so that the top doesnt turn white
 
 }
 
