@@ -117,17 +117,18 @@ struct SettingsView: View {
                     .font(.custom(fontChoice, size:16, relativeTo:.body))
                 
                 Picker("Fonts", selection: $fontChoice){
-                    Text("Avenir").font(.custom("Avenir-Book", size: 20)).tag("Avenir-Book")
-                    Text("Chalkboard").font(.custom("Chalkboard", size: 20)).tag("Chalkboard")
-                    Text("Georgia").font(.custom("Georgia", size: 20)).tag("Georgia")
-                    Text("Helvetica Neue").font(.custom("HelveticaNeue", size: 20)).tag("HelveticaNeue")
-                    Text("Marker Felt").font(.custom("MarkerFelt-Thin", size: 20)).tag("MarkerFelt-Thin")
-                    Text("Noteworthy").font(.custom("Noteworthy-Light", size: 20)).tag("Noteworthy-Light")
-                    Text("Palatino").font(.custom("Palatino-Roman", size: 20)).tag("Palatino-Roman")
-                    Text("SF Pro").font(.custom("SFPro-Regular", size: 20)).tag("SFPro-Regular")
-                    Text("Times New Roman").font(.custom("TimesNewRomanPSMT", size: 20)).tag("TimesNewRomanPSMT")
+                    Text("Avenir").font(.custom("Avenir-Book", size: 20)).tag("Avenir-Book").foregroundStyle(Color(textColor))
+                    Text("Chalkboard").font(.custom("Chalkboard", size: 20)).tag("Chalkboard").foregroundStyle(Color(textColor))
+                    Text("Georgia").font(.custom("Georgia", size: 20)).tag("Georgia").foregroundStyle(Color(textColor))
+                    Text("Helvetica Neue").font(.custom("HelveticaNeue", size: 20)).tag("HelveticaNeue").foregroundStyle(Color(textColor))
+                    Text("Marker Felt").font(.custom("MarkerFelt-Thin", size: 20)).tag("MarkerFelt-Thin").foregroundStyle(Color(textColor))
+                    Text("Noteworthy").font(.custom("Noteworthy-Light", size: 20)).tag("Noteworthy-Light").foregroundStyle(Color(textColor))
+                    Text("Palatino").font(.custom("Palatino-Roman", size: 20)).tag("Palatino-Roman").foregroundStyle(Color(textColor))
+                    Text("SF Pro").font(.custom("SFPro-Regular", size: 20)).tag("SFPro-Regular").foregroundStyle(Color(textColor))
+                    Text("Times New Roman").font(.custom("TimesNewRomanPSMT", size: 20)).tag("TimesNewRomanPSMT").foregroundStyle(Color(textColor))
                 }
                 .pickerStyle(.wheel)
+                
             }
             
             RoundedRectangle(cornerRadius: 25, style: .continuous)
@@ -163,6 +164,6 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView(backgroundColor:.constant("backgroundSepia"), textColor: .constant("textBrown"), fontChoice: .constant("Palatino"))
+    SettingsView(backgroundColor:.constant("backgroundSepia"), textColor: .constant("textBrown"), fontChoice: .constant("Avenir"))
 }
 
