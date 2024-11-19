@@ -16,7 +16,7 @@ struct ItemView: View {
         ScrollView{
             Spacer()
             Text(item.name)
-                .font(.system(size: 24))
+                .font(.custom(settings.fontChoice, size:24, relativeTo:.body))
                 .foregroundStyle(Color(settings.textColor))
             Image(uiImage: UIImage(data: item.image.photo)!)
                 .resizable()
@@ -28,8 +28,10 @@ struct ItemView: View {
                     Text(other.key + ":")
                         .bold()
                         .foregroundStyle(Color(settings.textColor))
+                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                     Text(other.value)
                         .foregroundStyle(Color(settings.textColor))
+                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                 }
                 .padding()
             }
@@ -39,10 +41,20 @@ struct ItemView: View {
             Spacer()
             Spacer()
             Spacer()
-                .navigationTitle("Item: " + item.name)
         }
         .containerRelativeFrame([.horizontal, .vertical])
         .background(Color(settings.backgroundColor))
+        .toolbarBackground(Color(settings.backgroundColor))
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                VStack {
+                    Text("Item: " + item.name)
+                        .font(.custom(settings.fontChoice, size:16, relativeTo:.headline))
+                        .bold()
+                        .foregroundStyle(Color(settings.textColor))
+                }
+            }
+        }
     }
 }
 

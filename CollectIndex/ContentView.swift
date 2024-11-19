@@ -28,7 +28,7 @@ struct ContentView: View {
                                     .frame(width: 60, height: 60)
                                     .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
                                 Text(collection.name)
-                                    .font(.system(size: 24))
+                                    .font(.custom(settings.fontChoice, size:24))
                                     .foregroundStyle(Color(settings.textColor))
                                 Spacer()
                                 Button {
@@ -79,31 +79,32 @@ struct ContentView: View {
                 CollectionView(collection: collection)
             }
             .navigationBarTitleDisplayMode(.inline)
-                    .toolbar {
-                        ToolbarItem(placement: .principal) {
-                            HStack{
-                                Spacer()
-                                Spacer()
-                                Spacer()
-                                Spacer()
-                                Spacer()
-                                Text("CollectIndex: Collections")
-                                    .font(.headline)
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        HStack {
+                            Spacer()
+                            Spacer()
+                            Spacer()
+                            Spacer()
+                            Spacer()
+                            Text("CollectIndex: Collections")
+                                .font(.custom(settings.fontChoice, size:16, relativeTo:.headline))
+                                .bold()
+                                .foregroundStyle(Color(settings.textColor))
+                            Spacer()
+                            Spacer()
+                            NavigationLink {
+                                SettingsView(backgroundColor: settings.$backgroundColor, textColor:settings.$textColor, fontChoice: settings.$fontChoice)
+                            } label: {
+                                Image(systemName: "gear")
                                     .foregroundStyle(Color(settings.textColor))
-                                Spacer()
-                                Spacer()
-                                NavigationLink {
-                                    SettingsView(backgroundColor: settings.$backgroundColor, textColor:settings.$textColor, fontChoice: settings.$fontChoice)
-                                } label: {
-                                    Image(systemName: "gear")
-                                        .foregroundStyle(Color(settings.textColor))
-                                }
                             }
                         }
                     }
+                }
                     .containerRelativeFrame([.horizontal, .vertical])
                     .background(Color(settings.backgroundColor))
-                    
+                    .toolbarBackground(Color(settings.backgroundColor))
         }
         
     }
@@ -112,13 +113,10 @@ struct ContentView: View {
     func deleteCollection(collection: Collection){
         collections.collectionArray.remove(at: collections.collectionArray.firstIndex(where: {$0.id == collection.id})!)
     }
-    
-        //TODO: fix the scroll view so that the top doesnt turn white
-
 }
 
-#Preview {
-    ContentView()
-        .environmentObject(Collections())
-        .environmentObject(SettingsManager())
-}
+//#Preview {
+//    ContentView()
+//        .environmentObject(Collections())
+//        .environmentObject(SettingsManager())
+//}

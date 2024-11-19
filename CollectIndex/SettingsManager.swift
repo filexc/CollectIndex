@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 class SettingsManager: ObservableObject {
-    @AppStorage("backgroundColor") var backgroundColor: String = "backgroundPink"
-    @AppStorage("textColor") var textColor: String = "textDarkPink"
-    @AppStorage("fontChoice") var fontChoice: String = "Avenir" //TODO: make the font implemented through the whole app
+    @AppStorage("backgroundColor") var backgroundColor: String = "white"
+    @AppStorage("textColor") var textColor: String = "black"
+    @AppStorage("fontChoice") var fontChoice: String = "Avenir"
 }

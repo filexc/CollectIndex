@@ -29,7 +29,8 @@ struct CollectionView: View {
                                 .frame(width: 60, height: 60)
                                 .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
                             Text(item.name)
-                                .font(.system(size: 24))
+//                                .font(.system(size: 24))
+                                .font(.custom(settings.fontChoice, size:24))
                                 .foregroundStyle(Color(settings.textColor))
                             Spacer()
                             Button {
@@ -74,7 +75,16 @@ struct CollectionView: View {
                 NewItemView(collection: collection)
             }
             Spacer()
-                .navigationTitle("Collection: " + collection.name)
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        VStack {
+                            Text("Collection: " + collection.name)
+                                .font(.custom(settings.fontChoice, size:16, relativeTo:.headline))
+                                .bold()
+                                .foregroundStyle(Color(settings.textColor))
+                        }
+                    }
+                }
                 .navigationDestination(for: Item.self){item in
                     ItemView(item: item)
                 }

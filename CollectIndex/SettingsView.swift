@@ -143,7 +143,7 @@ struct SettingsView: View {
         .toolbar {
             ToolbarItem(placement: .principal) {
                 VStack {
-                    Text("Nav Title")
+                    Text("Settings")
                         .font(.custom(fontChoice, size:16, relativeTo:.headline))
                         .bold()
                         .foregroundStyle(Color(textColor))
@@ -154,13 +154,6 @@ struct SettingsView: View {
         .background(Color(backgroundColor))
         
     }
-    
-    //TODO: fonts
-    //features
-    // fonts
-    //sans serif font
-    //serif font
-    //handwriting font?
 }
 
 #Preview {

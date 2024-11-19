@@ -33,19 +33,20 @@ struct NewCollectionView: View {
 
     var body: some View {
         ScrollView{
-            VStack{
-                Spacer()
-                
+//            VStack{
                 Text("New Collection")
                     .bold()
-                    .font(.system(size:30))
+                    .font(.custom(settings.fontChoice, size:30, relativeTo:.title))
                     .foregroundStyle(Color(settings.textColor))
                 
-                
+            Spacer()
+            Spacer()
                 HStack{
                     Text("  Collection Name")
                         .foregroundStyle(Color(settings.textColor))
+                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                     TextField("", text:$cName, prompt: Text("Collection Name").foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                         .padding(5)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10.0)
@@ -53,16 +54,17 @@ struct NewCollectionView: View {
                         )
                         .padding(5)
                         .foregroundStyle(Color(settings.textColor))
-                        
                 }
                 .padding()
                 
                 VStack{
                     HStack{
-                        Spacer()
-                        Text("Collection Cover                         ")
+                        Text("  Collection Cover")
                             .foregroundStyle(Color(settings.textColor))
+                            .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
+                        Spacer()
                         PhotosPicker("Select an image", selection: $selectedItem, matching:.images)
+                            .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                             .onChange(of: selectedItem){
                                 Task{
                                     if let data = try? await selectedItem?.loadTransferable(type: Data.self){
@@ -92,13 +94,16 @@ struct NewCollectionView: View {
                 Text("Item Fields")
                     .bold()
                     .underline()
-                    .font(.system(size:24))
+                    .font(.custom(settings.fontChoice, size:24, relativeTo:.subheadline))
                     .foregroundStyle(Color(settings.textColor))
                 
                 HStack{
-                    Text("Item Name   ")
+                    Text("  Item Name")
                         .foregroundStyle(Color(settings.textColor))
+                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
+                    Spacer()
                     TextField("", text:$iName, prompt: Text("Item Name").foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                         .padding(5)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10.0)
@@ -112,7 +117,9 @@ struct NewCollectionView: View {
                 HStack{
                     Text("Photo Name")
                         .foregroundStyle(Color(settings.textColor))
+                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                     TextField("", text:$pName, prompt: Text("Photo Name").foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                         .padding(5)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10.0)
@@ -126,6 +133,7 @@ struct NewCollectionView: View {
                 if (count >= 1){
                     HStack{
                         TextField("", text: $oKey1, prompt: Text("New Item Field").foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                            .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                             .padding(5)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10.0)
@@ -163,6 +171,7 @@ struct NewCollectionView: View {
                 if (count >= 2){
                     HStack{
                         TextField("", text: $oKey2, prompt: Text("New Item Field").foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                            .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                             .padding(5)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10.0)
@@ -200,6 +209,7 @@ struct NewCollectionView: View {
                 if (count >= 3){
                     HStack{
                         TextField("", text: $oKey3, prompt: Text("New Item Field").foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                            .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                             .padding(5)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10.0)
@@ -237,6 +247,7 @@ struct NewCollectionView: View {
                 if (count >= 4){
                     HStack{
                         TextField("", text: $oKey4, prompt: Text("New Item Field").foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                            .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                             .padding(5)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10.0)
@@ -274,6 +285,7 @@ struct NewCollectionView: View {
                 if (count == 5){
                     HStack{
                         TextField("", text: $oKey5, prompt: Text("New Item Field").foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                            .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                             .padding(5)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10.0)
@@ -315,6 +327,7 @@ struct NewCollectionView: View {
                             shouldHide = true
                         }
                     }
+                    .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                 }
                 
                 Spacer()
@@ -332,15 +345,17 @@ struct NewCollectionView: View {
                     }
                     .background(Color(settings.textColor).opacity(0.3))
                     .foregroundStyle(Color(settings.textColor))
+                    .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                     .buttonStyle(.bordered)
                     .cornerRadius(10)
                     .disabled(cName == "" || iName == "" || pName == "" || cImage == nil || (count >= 1 && oKey1 == "") || (count >= 2 && oKey2 == "") || (count >= 3 && oKey3 == "") || (count >= 4 && oKey4 == "") || (count == 5 && oKey5 == ""))
             }
-            
-        }
+//        }
         .containerRelativeFrame([.horizontal, .vertical])
         .background(Color(settings.backgroundColor))
-        
+        .toolbarBackground(Color(settings.backgroundColor))
+        .ignoresSafeArea(.container)
+
     }
         
     func createCollection(){

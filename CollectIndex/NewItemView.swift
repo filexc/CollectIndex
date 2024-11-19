@@ -31,12 +31,14 @@ struct NewItemView: View {
             Spacer()
             Text("New Item")
                 .bold()
-                .font(.system(size:30))
+                .font(.custom(settings.fontChoice, size:30))
                 .foregroundStyle(Color(settings.textColor))
             HStack{
                 Text(collection.itemName)
                     .foregroundStyle(Color(settings.textColor))
+                    .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                 TextField("", text:$iName, prompt: Text(collection.itemName).foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                    .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                     .padding(5)
                     .overlay(
                         RoundedRectangle(cornerRadius: 10.0)
@@ -51,8 +53,10 @@ struct NewItemView: View {
                 HStack{
                     Text(collection.photoName)
                         .foregroundStyle(Color(settings.textColor))
+                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                     Spacer()
                     PhotosPicker("Select an image", selection: $selectedItem, matching:.images)
+                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                         .onChange(of: selectedItem){
                             Task{
                                 if let data = try? await selectedItem?.loadTransferable(type: Data.self){
@@ -74,7 +78,9 @@ struct NewItemView: View {
                 HStack{
                     Text(collection.otherKey1)
                         .foregroundStyle(Color(settings.textColor))
+                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                     TextField("", text:$otherValue1, prompt: Text(collection.otherKey1).foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                         .padding(5)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10.0)
@@ -89,21 +95,26 @@ struct NewItemView: View {
                 HStack{
                     Text(collection.otherKey2)
                         .foregroundStyle(Color(settings.textColor))
+                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                     TextField("", text:$otherValue2, prompt: Text(collection.otherKey2).foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                         .padding(5)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10.0)
                                 .strokeBorder(Color(settings.textColor))
                         )
                         .padding(5)
-                        .foregroundStyle(Color(settings.textColor))                }
+                        .foregroundStyle(Color(settings.textColor))
+                }
                 .padding()
             }
             if (collection.otherKey3 != ""){
                 HStack{
                     Text(collection.otherKey3)
                         .foregroundStyle(Color(settings.textColor))
+                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                     TextField("", text:$otherValue3, prompt: Text(collection.otherKey3).foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                         .padding(5)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10.0)
@@ -118,7 +129,9 @@ struct NewItemView: View {
                 HStack{
                     Text(collection.otherKey4)
                         .foregroundStyle(Color(settings.textColor))
+                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                     TextField("", text:$otherValue4, prompt: Text(collection.otherKey4).foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                         .padding(5)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10.0)
@@ -133,7 +146,9 @@ struct NewItemView: View {
                 HStack{
                     Text(collection.otherKey5)
                         .foregroundStyle(Color(settings.textColor))
+                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                     TextField("", text:$otherValue5, prompt: Text(collection.otherKey5).foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
                         .padding(5)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10.0)
@@ -154,6 +169,7 @@ struct NewItemView: View {
                 createItem()
                 dismiss()
             }
+            .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
             .background(Color(settings.textColor).opacity(0.3))
             .foregroundStyle(Color(settings.textColor))
             .buttonStyle(.bordered)
