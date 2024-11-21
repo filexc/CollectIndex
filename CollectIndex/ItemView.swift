@@ -5,33 +5,39 @@
 //  Created by Violet Chaffee on 10/17/24.
 //
 
-import SwiftUI
 import PhotosUI
+import SwiftUI
 
 struct ItemView: View {
     @EnvironmentObject var settings: SettingsManager
     @State var item: Item
-    //may need to make it a scroll view
+
     var body: some View {
-        ScrollView{
+        ScrollView {
             Spacer()
             Text(item.name)
-                .font(.custom(settings.fontChoice, size:24, relativeTo:.body))
+                .font(.custom(settings.fontChoice, size: 24, relativeTo: .body))
                 .foregroundStyle(Color(settings.textColor))
             Image(uiImage: UIImage(data: item.image.photo)!)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 200, height: 200)
             Spacer()
-            ForEach(item.otherFields) {other in
-                HStack{
+            ForEach(item.otherFields) { other in
+                HStack {
                     Text(other.key + ":")
                         .bold()
                         .foregroundStyle(Color(settings.textColor))
-                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
+                        .font(
+                            .custom(
+                                settings.fontChoice, size: 16, relativeTo: .body
+                            ))
                     Text(other.value)
                         .foregroundStyle(Color(settings.textColor))
-                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
+                        .font(
+                            .custom(
+                                settings.fontChoice, size: 16, relativeTo: .body
+                            ))
                 }
                 .padding()
             }
@@ -49,7 +55,11 @@ struct ItemView: View {
             ToolbarItem(placement: .principal) {
                 VStack {
                     Text("Item: " + item.name)
-                        .font(.custom(settings.fontChoice, size:16, relativeTo:.headline))
+                        .font(
+                            .custom(
+                                settings.fontChoice, size: 16,
+                                relativeTo: .headline)
+                        )
                         .bold()
                         .foregroundStyle(Color(settings.textColor))
                 }

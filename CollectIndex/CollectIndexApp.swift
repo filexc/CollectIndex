@@ -5,8 +5,8 @@
 //  Created by Violet Chaffee on 9/30/24.
 //
 
-import SwiftUI
 import Foundation
+import SwiftUI
 
 @main
 struct CollectIndexApp: App {
@@ -26,7 +26,7 @@ struct CollectIndexApp: App {
                     }
                 }
         }
-        .onChange(of: scenePhase){
+        .onChange(of: scenePhase) {
             if scenePhase == .background {
                 collections.saveData()
             }

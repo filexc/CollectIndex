@@ -6,7 +6,8 @@
 //
 
 import Foundation
-struct Other : Hashable, Codable, Identifiable {
+
+struct Other: Hashable, Codable, Identifiable {
     let id: UUID
     let key: String
     let value: String

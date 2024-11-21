@@ -9,11 +9,14 @@ import Foundation
 import PhotosUI
 import SwiftUI
 
-struct Item : Identifiable, Hashable, Codable{
+struct Item: Identifiable, Hashable, Codable {
     let id: UUID
     let name: String
     let image: CodableImage
     let otherFields: [Other]
-    
-    static let example = Item(id: UUID(), name: "item 1", image: CodableImage(photo: UIImage(systemName: "square.fill")!), otherFields:[Other(id: UUID(), key: "key", value: "value")])
+
+    static let example = Item(
+        id: UUID(), name: "item 1",
+        image: CodableImage(photo: UIImage(systemName: "square.fill")!),
+        otherFields: [Other(id: UUID(), key: "key", value: "value")])
 }

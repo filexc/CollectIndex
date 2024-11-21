@@ -14,23 +14,31 @@ struct CollectionView: View {
     @State private var showingDetail = false
     @State private var showingDeleteAlert = false
     @State private var itemToDelete: Item?
-    
+
     var body: some View {
-        NavigationStack{
+        NavigationStack {
             //this may be bad -- force unwrapping
-            ForEach(collections.collectionArray[collections.collectionArray.firstIndex(where: {$0.id == collection.id})!].items) {item in
-                VStack{
+            ForEach(
+                collections.collectionArray[
+                    collections.collectionArray.firstIndex(where: {
+                        $0.id == collection.id
+                    })!
+                ].items
+            ) { item in
+                VStack {
                     NavigationLink {
                         ItemView(item: item)
                     } label: {
-                        HStack{
+                        HStack {
                             Image(uiImage: UIImage(data: item.image.photo)!)
                                 .resizable()
                                 .frame(width: 60, height: 60)
-                                .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
+                                .clipShape(
+                                    RoundedRectangle(
+                                        cornerSize: CGSize(
+                                            width: 10, height: 10)))
                             Text(item.name)
-//                                .font(.system(size: 24))
-                                .font(.custom(settings.fontChoice, size:24))
+                                .font(.custom(settings.fontChoice, size: 24))
                                 .foregroundStyle(Color(settings.textColor))
                             Spacer()
                             Button {
@@ -40,17 +48,19 @@ struct CollectionView: View {
                                 Image(systemName: "trash")
                                     .foregroundStyle(.red)
                             }
-                            .alert(isPresented:$showingDeleteAlert) {
+                            .alert(isPresented: $showingDeleteAlert) {
                                 Alert(
                                     title: Text("Confirm Delete"),
-                                    message: Text("You cannot undo this action"),
-                                    primaryButton: .destructive(Text("Delete")) {
+                                    message: Text(
+                                        "You cannot undo this action"),
+                                    primaryButton: .destructive(Text("Delete"))
+                                    {
                                         if let item = itemToDelete {
                                             deleteItem(item: item)
                                         }
                                         itemToDelete = nil
                                     },
-                                    secondaryButton: .cancel() {
+                                    secondaryButton: .cancel {
                                         itemToDelete = nil
                                     }
                                 )
@@ -62,7 +72,7 @@ struct CollectionView: View {
                 .frame(width: 320, height: 80, alignment: .topLeading)
                 .foregroundColor(Color(settings.textColor))
             }
-            NavigationLink(destination:NewItemView(collection:collection)){
+            NavigationLink(destination: NewItemView(collection: collection)) {
                 Image(systemName: "plus.square")
                     .font(.system(size: 60))
                     .frame(width: 300, height: 60, alignment: .topLeading)
@@ -73,26 +83,34 @@ struct CollectionView: View {
                     ToolbarItem(placement: .principal) {
                         VStack {
                             Text("Collection: " + collection.name)
-                                .font(.custom(settings.fontChoice, size:16, relativeTo:.headline))
+                                .font(
+                                    .custom(
+                                        settings.fontChoice, size: 16,
+                                        relativeTo: .headline)
+                                )
                                 .bold()
                                 .foregroundStyle(Color(settings.textColor))
                         }
                     }
                 }
-                .navigationDestination(for: Item.self){item in
+                .navigationDestination(for: Item.self) { item in
                     ItemView(item: item)
                 }
         }
         .containerRelativeFrame([.horizontal, .vertical])
         .background(Color(settings.backgroundColor))
     }
-    
-    func deleteItem(item: Item){
-        collections.collectionArray[collections.collectionArray.firstIndex(where: {$0.id == collection.id})!].items.remove(at: collections.collectionArray[collections.collectionArray.firstIndex(where: {$0.id == collection.id})!].items.firstIndex(where: {$0.id == item.id})!)
+
+    func deleteItem(item: Item) {
+        collections.collectionArray[
+            collections.collectionArray.firstIndex(where: {
+                $0.id == collection.id
+            })!
+        ].items.remove(
+            at: collections.collectionArray[
+                collections.collectionArray.firstIndex(where: {
+                    $0.id == collection.id
+                })!
+            ].items.firstIndex(where: { $0.id == item.id })!)
     }
 }
-//    #Preview {
-//        CollectionView(collection: Collection.example)
-//            .environmentObject(Collections())
-//            .environmentObject(SettingsManager())
-//    }
