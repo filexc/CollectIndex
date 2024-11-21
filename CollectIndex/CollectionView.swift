@@ -62,17 +62,11 @@ struct CollectionView: View {
                 .frame(width: 320, height: 80, alignment: .topLeading)
                 .foregroundColor(Color(settings.textColor))
             }
-            
-            Button{
-                showingDetail = true
-            } label: {
+            NavigationLink(destination:NewItemView(collection:collection)){
                 Image(systemName: "plus.square")
                     .font(.system(size: 60))
                     .frame(width: 300, height: 60, alignment: .topLeading)
                     .foregroundStyle(Color(settings.textColor))
-            }
-            .sheet(isPresented: $showingDetail){
-                NewItemView(collection: collection)
             }
             Spacer()
                 .toolbar {

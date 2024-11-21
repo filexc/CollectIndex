@@ -61,19 +61,15 @@ struct ContentView: View {
                     .foregroundColor(Color(settings.textColor))
                     .background(Color(settings.backgroundColor))
                 }
-                Button{
-                    showingDetail = true
-                } label: {
+                NavigationLink(destination:NewCollectionView()){
                     Image(systemName: "plus.square")
                         .font(.system(size: 60))
                         .frame(width: 300, height: 60, alignment: .topLeading)
                         .foregroundStyle(Color(settings.textColor))
                 }
-                .sheet(isPresented: $showingDetail){
-                    NewCollectionView()
-                }
-                Spacer()
-                    .navigationBarBackButtonHidden(true)
+                    Spacer()
+                        .navigationBarBackButtonHidden(true)
+                
             }
             .navigationDestination(for: Collection.self){ collection in
                 CollectionView(collection: collection)
@@ -81,7 +77,7 @@ struct ContentView: View {
             .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .principal) {
-                        HStack {
+                        HStack { //TODO: see if the settings can be fixed to the right no matter what font is used
                             Spacer()
                             Spacer()
                             Spacer()

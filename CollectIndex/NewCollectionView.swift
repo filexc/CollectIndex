@@ -11,6 +11,9 @@ import PhotosUI
 struct NewCollectionView: View {
     @EnvironmentObject var collections: Collections
     @EnvironmentObject var settings: SettingsManager
+    
+    @State private var keyboardHeight: CGFloat = 0
+
     @State private var selectedItem: PhotosPickerItem?
     @State private var cName: String = ""
     @State private var iName: String = ""
@@ -32,15 +35,15 @@ struct NewCollectionView: View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        ScrollView{
-//            VStack{
+            ScrollView{
+                //            VStack{
                 Text("New Collection")
                     .bold()
                     .font(.custom(settings.fontChoice, size:30, relativeTo:.title))
                     .foregroundStyle(Color(settings.textColor))
                 
-            Spacer()
-            Spacer()
+                Spacer()
+                Spacer()
                 HStack{
                     Text("  Collection Name")
                         .foregroundStyle(Color(settings.textColor))
@@ -57,30 +60,32 @@ struct NewCollectionView: View {
                 }
                 .padding()
                 
-                VStack{
-                    HStack{
-                        Text("  Collection Cover")
-                            .foregroundStyle(Color(settings.textColor))
-                            .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
-                        Spacer()
-                        PhotosPicker("Select an image", selection: $selectedItem, matching:.images)
-                            .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
-                            .onChange(of: selectedItem){
-                                Task{
-                                    if let data = try? await selectedItem?.loadTransferable(type: Data.self){
-                                        cImage = UIImage(data: data)
-                                    }
-                                    print("Failed to load the image")
+                //                VStack{
+                HStack{
+                    Text("  Collection Cover")
+                        .foregroundStyle(Color(settings.textColor))
+                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
+                    Spacer()
+                    PhotosPicker("Select an image", selection: $selectedItem, matching:.images)
+                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
+                        .onChange(of: selectedItem){
+                            Task{
+                                if let data = try? await selectedItem?.loadTransferable(type: Data.self){
+                                    cImage = UIImage(data: data)
                                 }
+                                print("Failed to load the image")
                             }
-                    }
-                    if let cImage{
-                        Image(uiImage: cImage)
-                            .resizable()
-                            .scaledToFit()
-                    }
+                        }
                 }
                 .padding()
+                if let cImage{
+                    Image(uiImage: cImage)
+                        .resizable()
+                        .scaledToFit()
+                        .padding()
+                }
+                //                }
+                //                .padding()
                 
                 Spacer()
                 Spacer()
@@ -320,6 +325,7 @@ struct NewCollectionView: View {
                     .padding(.trailing)
                 }
                 
+                
                 if !shouldHide{
                     Button("Add Item Field"){
                         addItemField()
@@ -339,24 +345,26 @@ struct NewCollectionView: View {
                 Spacer()
                 Spacer()
                 
-                    Button("Create Collection"){
-                        createCollection()
-                        dismiss()
-                    }
-                    .background(Color(settings.textColor).opacity(0.3))
-                    .foregroundStyle(Color(settings.textColor))
-                    .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
-                    .buttonStyle(.bordered)
-                    .cornerRadius(10)
-                    .disabled(cName == "" || iName == "" || pName == "" || cImage == nil || (count >= 1 && oKey1 == "") || (count >= 2 && oKey2 == "") || (count >= 3 && oKey3 == "") || (count >= 4 && oKey4 == "") || (count == 5 && oKey5 == ""))
+                Button("Create Collection"){
+                    createCollection()
+                    dismiss()
+                }
+                .background(Color(settings.textColor).opacity(0.3))
+                .foregroundStyle(Color(settings.textColor))
+                .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
+                .buttonStyle(.bordered)
+                .cornerRadius(10)
+                .disabled(cName == "" || iName == "" || pName == "" || cImage == nil || (count >= 1 && oKey1 == "") || (count >= 2 && oKey2 == "") || (count >= 3 && oKey3 == "") || (count >= 4 && oKey4 == "") || (count == 5 && oKey5 == ""))
+                //            }
             }
-//        }
-        .containerRelativeFrame([.horizontal, .vertical])
-        .background(Color(settings.backgroundColor))
-        .toolbarBackground(Color(settings.backgroundColor))
-        .ignoresSafeArea(.container)
+            .keyboardHeight($keyboardHeight)
+//            .offset(y: -keyboardHeight / 2)
 
-    }
+            //        .containerRelativeFrame([.horizontal, .vertical])
+            .background(Color(settings.backgroundColor))
+            .toolbarBackground(Color(settings.backgroundColor))
+            //        .ignoresSafeArea(.)
+        }
         
     func createCollection(){
         collections.collectionArray.append(Collection(id: UUID(), name: cName, items: [Item](), coverImage: CodableImage(photo: cImage!), itemName: iName, photoName: pName, otherKey1: oKey1, otherKey2: oKey2, otherKey3: oKey3, otherKey4: oKey4, otherKey5: oKey5))
