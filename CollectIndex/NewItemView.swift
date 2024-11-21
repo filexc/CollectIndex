@@ -9,6 +9,8 @@ import SwiftUI
 import PhotosUI
 
 struct NewItemView: View {
+    @State private var keyboardHeight: CGFloat = 0
+
     @State private var selectedItem: PhotosPickerItem?
     @State private var iName: String = ""
     @State private var iImage: UIImage? = nil
@@ -27,157 +29,162 @@ struct NewItemView: View {
     var photoPicker = PhotoPicker()
     
     var body: some View {
-        VStack{
-            Spacer()
-            Text("New Item")
-                .bold()
-                .font(.custom(settings.fontChoice, size:30))
-                .foregroundStyle(Color(settings.textColor))
-            HStack{
-                Text(collection.itemName)
+        ScrollView{
+//            VStack{
+                Spacer()
+                Text("New Item")
+                    .bold()
+                    .font(.custom(settings.fontChoice, size:30))
                     .foregroundStyle(Color(settings.textColor))
-                    .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
-                TextField("", text:$iName, prompt: Text(collection.itemName).foregroundStyle(Color(settings.textColor).opacity(0.5)))
-                    .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
-                    .padding(5)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10.0)
-                            .strokeBorder(Color(settings.textColor))
-                    )
-                    .padding(5)
-                    .foregroundStyle(Color(settings.textColor))
-            }
-            .padding()
-            
-            VStack{
                 HStack{
-                    Text(collection.photoName)
+                    Text(collection.itemName)
                         .foregroundStyle(Color(settings.textColor))
                         .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
-                    Spacer()
-                    PhotosPicker("Select an image", selection: $selectedItem, matching:.images)
+                    TextField("", text:$iName, prompt: Text(collection.itemName).foregroundStyle(Color(settings.textColor).opacity(0.5)))
                         .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
-                        .onChange(of: selectedItem){
-                            Task{
-                                if let data = try? await selectedItem?.loadTransferable(type: Data.self){
-                                    iImage = UIImage(data: data)
+                        .padding(5)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10.0)
+                                .strokeBorder(Color(settings.textColor))
+                        )
+                        .padding(5)
+                        .foregroundStyle(Color(settings.textColor))
+                }
+                .padding()
+                
+//                VStack{
+                    HStack{
+                        Text(collection.photoName)
+                            .foregroundStyle(Color(settings.textColor))
+                            .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
+                        Spacer()
+                        PhotosPicker("Select an image", selection: $selectedItem, matching:.images)
+                            .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
+                            .onChange(of: selectedItem){
+                                Task{
+                                    if let data = try? await selectedItem?.loadTransferable(type: Data.self){
+                                        iImage = UIImage(data: data)
+                                    }
+                                    print("Failed to load the image")
                                 }
-                                print("Failed to load the image")
                             }
-                        }
+                    }
+                    .padding()
+                    if let iImage{
+                        Image(uiImage: iImage)
+                            .resizable()
+                            .scaledToFit()
+                    }
+//                }
+//                .padding()
+                
+                if (collection.otherKey1 != ""){
+                    HStack{
+                        Text(collection.otherKey1)
+                            .foregroundStyle(Color(settings.textColor))
+                            .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
+                        TextField("", text:$otherValue1, prompt: Text(collection.otherKey1).foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                            .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
+                            .padding(5)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10.0)
+                                    .strokeBorder(Color(settings.textColor))
+                            )
+                            .padding(5)
+                            .foregroundStyle(Color(settings.textColor))
+                    }
+                    .padding()
                 }
-                if let iImage{
-                    Image(uiImage: iImage)
-                        .resizable()
-                        .scaledToFit()
+                if (collection.otherKey2 != ""){
+                    HStack{
+                        Text(collection.otherKey2)
+                            .foregroundStyle(Color(settings.textColor))
+                            .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
+                        TextField("", text:$otherValue2, prompt: Text(collection.otherKey2).foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                            .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
+                            .padding(5)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10.0)
+                                    .strokeBorder(Color(settings.textColor))
+                            )
+                            .padding(5)
+                            .foregroundStyle(Color(settings.textColor))
+                    }
+                    .padding()
                 }
-            }
-            .padding()
-            
-            if (collection.otherKey1 != ""){
-                HStack{
-                    Text(collection.otherKey1)
-                        .foregroundStyle(Color(settings.textColor))
-                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
-                    TextField("", text:$otherValue1, prompt: Text(collection.otherKey1).foregroundStyle(Color(settings.textColor).opacity(0.5)))
-                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
-                        .padding(5)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10.0)
-                                .strokeBorder(Color(settings.textColor))
-                        )
-                        .padding(5)
-                        .foregroundStyle(Color(settings.textColor))
+                if (collection.otherKey3 != ""){
+                    HStack{
+                        Text(collection.otherKey3)
+                            .foregroundStyle(Color(settings.textColor))
+                            .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
+                        TextField("", text:$otherValue3, prompt: Text(collection.otherKey3).foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                            .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
+                            .padding(5)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10.0)
+                                    .strokeBorder(Color(settings.textColor))
+                            )
+                            .padding(5)
+                            .foregroundStyle(Color(settings.textColor))
+                    }
+                    .padding()
                 }
-                .padding()
-            }
-            if (collection.otherKey2 != ""){
-                HStack{
-                    Text(collection.otherKey2)
-                        .foregroundStyle(Color(settings.textColor))
-                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
-                    TextField("", text:$otherValue2, prompt: Text(collection.otherKey2).foregroundStyle(Color(settings.textColor).opacity(0.5)))
-                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
-                        .padding(5)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10.0)
-                                .strokeBorder(Color(settings.textColor))
-                        )
-                        .padding(5)
-                        .foregroundStyle(Color(settings.textColor))
+                if (collection.otherKey4 != ""){
+                    HStack{
+                        Text(collection.otherKey4)
+                            .foregroundStyle(Color(settings.textColor))
+                            .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
+                        TextField("", text:$otherValue4, prompt: Text(collection.otherKey4).foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                            .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
+                            .padding(5)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10.0)
+                                    .strokeBorder(Color(settings.textColor))
+                            )
+                            .padding(5)
+                            .foregroundStyle(Color(settings.textColor))
+                    }
+                    .padding()
                 }
-                .padding()
-            }
-            if (collection.otherKey3 != ""){
-                HStack{
-                    Text(collection.otherKey3)
-                        .foregroundStyle(Color(settings.textColor))
-                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
-                    TextField("", text:$otherValue3, prompt: Text(collection.otherKey3).foregroundStyle(Color(settings.textColor).opacity(0.5)))
-                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
-                        .padding(5)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10.0)
-                                .strokeBorder(Color(settings.textColor))
-                        )
-                        .padding(5)
-                        .foregroundStyle(Color(settings.textColor))
+                if (collection.otherKey5 != ""){
+                    HStack{
+                        Text(collection.otherKey5)
+                            .foregroundStyle(Color(settings.textColor))
+                            .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
+                        TextField("", text:$otherValue5, prompt: Text(collection.otherKey5).foregroundStyle(Color(settings.textColor).opacity(0.5)))
+                            .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
+                            .padding(5)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10.0)
+                                    .strokeBorder(Color(settings.textColor))
+                            )
+                            .padding(5)
+                            .foregroundStyle(Color(settings.textColor))
+                    }
+                    .padding()
                 }
-                .padding()
-            }
-            if (collection.otherKey4 != ""){
-                HStack{
-                    Text(collection.otherKey4)
-                        .foregroundStyle(Color(settings.textColor))
-                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
-                    TextField("", text:$otherValue4, prompt: Text(collection.otherKey4).foregroundStyle(Color(settings.textColor).opacity(0.5)))
-                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
-                        .padding(5)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10.0)
-                                .strokeBorder(Color(settings.textColor))
-                        )
-                        .padding(5)
-                        .foregroundStyle(Color(settings.textColor))
+                
+                Spacer()
+                Spacer()
+                Spacer()
+                Spacer()
+                
+                Button("Create Item"){
+                    createItem()
+                    dismiss()
                 }
-                .padding()
-            }
-            if (collection.otherKey5 != ""){
-                HStack{
-                    Text(collection.otherKey5)
-                        .foregroundStyle(Color(settings.textColor))
-                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
-                    TextField("", text:$otherValue5, prompt: Text(collection.otherKey5).foregroundStyle(Color(settings.textColor).opacity(0.5)))
-                        .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
-                        .padding(5)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10.0)
-                                .strokeBorder(Color(settings.textColor))
-                        )
-                        .padding(5)
-                        .foregroundStyle(Color(settings.textColor))
-                }
-                .padding()
-            }
-            
-            Spacer()
-            Spacer()
-            Spacer()
-            Spacer()
-            
-            Button("Create Item"){
-                createItem()
-                dismiss()
-            }
-            .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
-            .background(Color(settings.textColor).opacity(0.3))
-            .foregroundStyle(Color(settings.textColor))
-            .buttonStyle(.bordered)
-            .cornerRadius(10)
-            .disabled(iName == "" || iImage == nil || (collection.otherKey1 != "" && otherValue1 == "") || (collection.otherKey2 != "" && otherValue2 == "") || (collection.otherKey3 != "" && otherValue3 == "") || (collection.otherKey4 != "" && otherValue4 == "") || (collection.otherKey5 != "" && otherValue5 == ""))
+                .font(.custom(settings.fontChoice, size:16, relativeTo:.body))
+                .background(Color(settings.textColor).opacity(0.3))
+                .foregroundStyle(Color(settings.textColor))
+                .buttonStyle(.bordered)
+                .cornerRadius(10)
+                .disabled(iName == "" || iImage == nil || (collection.otherKey1 != "" && otherValue1 == "") || (collection.otherKey2 != "" && otherValue2 == "") || (collection.otherKey3 != "" && otherValue3 == "") || (collection.otherKey4 != "" && otherValue4 == "") || (collection.otherKey5 != "" && otherValue5 == ""))
+//            }
         }
-        .containerRelativeFrame([.horizontal, .vertical])
+        .keyboardHeight($keyboardHeight)
+//        .containerRelativeFrame([.horizontal, .vertical])
         .background(Color(settings.backgroundColor))
+        .toolbarBackground(Color(settings.backgroundColor))
     }
     
     func createItem(){

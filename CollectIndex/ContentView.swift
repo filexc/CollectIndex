@@ -79,22 +79,18 @@ struct ContentView: View {
                     ToolbarItem(placement: .principal) {
                         HStack { //TODO: see if the settings can be fixed to the right no matter what font is used
                             Spacer()
-                            Spacer()
-                            Spacer()
-                            Spacer()
-                            Spacer()
+                        
                             Text("CollectIndex: Collections")
                                 .font(.custom(settings.fontChoice, size:16, relativeTo:.headline))
                                 .bold()
                                 .foregroundStyle(Color(settings.textColor))
-                            Spacer()
-                            Spacer()
-                            NavigationLink {
-                                SettingsView(backgroundColor: settings.$backgroundColor, textColor:settings.$textColor, fontChoice: settings.$fontChoice)
-                            } label: {
-                                Image(systemName: "gear")
-                                    .foregroundStyle(Color(settings.textColor))
-                            }
+                                Spacer()
+                                NavigationLink {
+                                    SettingsView(backgroundColor: settings.$backgroundColor, textColor:settings.$textColor, fontChoice: settings.$fontChoice)
+                                } label: {
+                                    Image(systemName: "gear")
+                                        .foregroundStyle(Color(settings.textColor))
+                                }
                         }
                     }
                 }
