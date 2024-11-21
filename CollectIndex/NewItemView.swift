@@ -74,6 +74,7 @@ struct NewItemView: View {
                         Image(uiImage: iImage)
                             .resizable()
                             .scaledToFit()
+                            .padding()
                     }
 //                }
 //                .padding()

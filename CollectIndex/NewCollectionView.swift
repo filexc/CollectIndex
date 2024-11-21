@@ -357,9 +357,9 @@ struct NewCollectionView: View {
                 .disabled(cName == "" || iName == "" || pName == "" || cImage == nil || (count >= 1 && oKey1 == "") || (count >= 2 && oKey2 == "") || (count >= 3 && oKey3 == "") || (count >= 4 && oKey4 == "") || (count == 5 && oKey5 == ""))
                 //            }
             }
+            .modifier(DismissingKeyboard())
             .keyboardHeight($keyboardHeight)
 //            .offset(y: -keyboardHeight / 2)
-
             //        .containerRelativeFrame([.horizontal, .vertical])
             .background(Color(settings.backgroundColor))
             .toolbarBackground(Color(settings.backgroundColor))
