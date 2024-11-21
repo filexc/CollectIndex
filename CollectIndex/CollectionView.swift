@@ -72,12 +72,21 @@ struct CollectionView: View {
                 .frame(width: 320, height: 80, alignment: .topLeading)
                 .foregroundColor(Color(settings.textColor))
             }
-            NavigationLink(destination: NewItemView(collection: collection)) {
-                Image(systemName: "plus.square")
-                    .font(.system(size: 60))
-                    .frame(width: 300, height: 60, alignment: .topLeading)
-                    .foregroundStyle(Color(settings.textColor))
-            }
+            NavigationLink {
+                NewItemView(collection: collection)
+            } label: {
+                HStack {
+                    Image(systemName: "plus.square")
+                        .font(.system(size: 65))
+                        .frame(width: 65, height: 65, alignment: .topLeading)
+                        .foregroundStyle(Color(settings.textColor))
+                    Text("New Item")
+                        .font(.custom(settings.fontChoice, size:24))
+                        .foregroundStyle(Color(settings.textColor))
+                    Spacer()
+                    }
+                }
+            .padding(.leading, 50)
             Spacer()
                 .toolbar {
                     ToolbarItem(placement: .principal) {

@@ -75,13 +75,21 @@ struct ContentView: View {
                     .foregroundColor(Color(settings.textColor))
                     .background(Color(settings.backgroundColor))
                 }
-                NavigationLink(destination: NewCollectionView()) {
-                    Image(systemName: "plus.square")
-                        .font(.system(size: 60))
-                        .frame(width: 300, height: 60, alignment: .topLeading)
-                        .foregroundStyle(Color(settings.textColor))
-                }
-                Spacer()
+                    NavigationLink {
+                        NewCollectionView()
+                    } label: {
+                        HStack {
+                            Image(systemName: "plus.square")
+                                .font(.system(size: 65))
+                                .frame(width: 65, height: 65, alignment: .topLeading)
+                                .foregroundStyle(Color(settings.textColor))
+                            Text("New Collection")
+                                .font(.custom(settings.fontChoice, size:24))
+                                .foregroundStyle(Color(settings.textColor))
+                            Spacer()
+                            }
+                        }
+                    .padding(.leading, 50)
                     .navigationBarBackButtonHidden(true)
 
             }
