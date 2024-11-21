@@ -16,6 +16,7 @@ struct NewItemView: View {
     @State private var iImage: UIImage? = nil
     @State var collection: Collection
     @State private var otherFields: [Other] = [Other]()
+    @State private var showingBackAlert = false
     @EnvironmentObject var collections: Collections
     @EnvironmentObject var settings: SettingsManager
     @Environment(\.dismiss) var dismiss
@@ -295,6 +296,40 @@ struct NewItemView: View {
         .keyboardHeight($keyboardHeight)
         .background(Color(settings.backgroundColor))
         .toolbarBackground(Color(settings.backgroundColor))
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    if (iName != "" || iImage != nil
+                            || (collection.otherKey1 != "" && otherValue1 != "")
+                            || (collection.otherKey2 != "" && otherValue2 != "")
+                            || (collection.otherKey3 != "" && otherValue3 != "")
+                            || (collection.otherKey4 != "" && otherValue4 != "")
+                            || (collection.otherKey5 != "" && otherValue5 != ""))
+                    {
+                        showingBackAlert = true
+                    } else {
+                        dismiss()
+                    }
+                } label: {
+                    Image(systemName: "chevron.backward")
+                    Text("Back")
+                }
+                .alert(isPresented: $showingBackAlert) {
+                    Alert(
+                        title: Text("Go Back"),
+                        message: Text(
+                            "All progress on this screen will be deleted"),
+                        primaryButton: .destructive(Text("Confirm")) {
+                            dismiss()
+                        },
+                        secondaryButton: .cancel {
+
+                        }
+                    )
+                }
+            }
+        }
     }
 
     func createItem() {

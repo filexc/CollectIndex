@@ -28,6 +28,7 @@ struct NewCollectionView: View {
     @State private var shouldHide: Bool = false
     @State private var fieldToDelete: Int?
     @State private var showingDeleteAlert = false
+    @State private var showingBackAlert = false
     @State private var enableButton = false
 
     var photoPicker = PhotoPicker()
@@ -135,7 +136,7 @@ struct NewCollectionView: View {
                     .font(
                         .custom(
                             settings.fontChoice, size: 16, relativeTo: .body))
-                Text("Item Name")
+                Text(" Item Name")
                     .foregroundStyle(Color(settings.textColor))
                     .font(
                         .custom(
@@ -449,6 +450,41 @@ struct NewCollectionView: View {
         .keyboardHeight($keyboardHeight)
         .background(Color(settings.backgroundColor))
         .toolbarBackground(Color(settings.backgroundColor))
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    if cName != "" || iName != "" || pName != ""
+                        || cImage != nil
+                        || (count >= 1 && oKey1 != "")
+                        || (count >= 2 && oKey2 != "")
+                        || (count >= 3 && oKey3 != "")
+                        || (count >= 4 && oKey4 != "")
+                        || (count == 5 && oKey5 != "")
+                    {
+                        showingBackAlert = true
+                    } else {
+                        dismiss()
+                    }
+                } label: {
+                    Image(systemName: "chevron.backward")
+                    Text("Back")
+                }
+                .alert(isPresented: $showingBackAlert) {
+                    Alert(
+                        title: Text("Go Back"),
+                        message: Text(
+                            "All progress on this screen will be deleted"),
+                        primaryButton: .destructive(Text("Confirm")) {
+                            dismiss()
+                        },
+                        secondaryButton: .cancel {
+
+                        }
+                    )
+                }
+            }
+        }
     }
 
     func createCollection() {
