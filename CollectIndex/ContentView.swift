@@ -71,9 +71,9 @@ struct ContentView: View {
                             .padding()
                         }
                     }
-                    .frame(width: 320, height: 80, alignment: .topLeading)
-                    .foregroundColor(Color(settings.textColor))
+                    .foregroundStyle(Color(settings.textColor))
                     .background(Color(settings.backgroundColor))
+                    .padding(.horizontal, 45)
                 }
                     NavigationLink {
                         NewCollectionView()

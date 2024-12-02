@@ -70,8 +70,8 @@ struct CollectionView: View {
                             .padding()
                         }
                     }
-                    .frame(width: 320, height: 80, alignment: .topLeading)
-                    .foregroundColor(Color(settings.textColor))
+                    .foregroundStyle(Color(settings.textColor))
+                    .padding(.horizontal, 45)
                 }
                 NavigationLink {
                     NewItemView(collection: collection)
