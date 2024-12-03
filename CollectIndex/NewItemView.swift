@@ -314,6 +314,7 @@ struct NewItemView: View {
                 } label: {
                     Image(systemName: "chevron.backward")
                     Text("Back")
+                        .font(.custom(settings.fontChoice, size: 16))
                 }
                 .alert(isPresented: $showingBackAlert) {
                     Alert(
