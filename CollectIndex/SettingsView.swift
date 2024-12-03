@@ -11,6 +11,7 @@ struct SettingsView: View {
     @Binding var backgroundColor: String
     @Binding var textColor: String
     @Binding var fontChoice: String
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         ScrollView{
@@ -159,6 +160,7 @@ struct SettingsView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .principal) {
                 VStack {
@@ -166,6 +168,15 @@ struct SettingsView: View {
                         .font(.custom(fontChoice, size:16, relativeTo:.headline))
                         .bold()
                         .foregroundStyle(Color(textColor))
+                }
+            }
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.backward")
+                    Text("Back")
+                        .font(.custom(fontChoice, size: 16))
                 }
             }
         }
